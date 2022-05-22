@@ -1,13 +1,14 @@
 <head>
-    <title>Home</title>
+    <title>Games</title>
 </head>
+
+<p><a href="/">Home</a></p>
 
 <main>
     <h1>Hello World!</h1>
-    <p>My test webpage for setting up github pages</p>
-    <p><a href="/games">Temporary link to the games page</a></p>
+    <p>Temporary page for game links</p>
+    <p><a href="/games/picross">Picross</a></p>
 </main>
-
 
 <style>
     main {
