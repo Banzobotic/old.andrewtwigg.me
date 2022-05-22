@@ -1,48 +1,74 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-5618a0df.js",
+    "file": "start-d427e92e.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
-      "_vendor-f0095a1c.js"
+      "_index-3549ff43.js"
     ],
     "dynamicImports": [
       ".svelte-kit/runtime/components/layout.svelte",
       ".svelte-kit/runtime/components/error.svelte",
+      "src/routes/games/picross.svelte",
+      "src/routes/games.svelte",
       "src/routes/index.svelte"
     ]
   },
   ".svelte-kit/runtime/components/layout.svelte": {
-    "file": "layout.svelte-520fc8b6.js",
+    "file": "layout.svelte-8b66a6cd.js",
     "src": ".svelte-kit/runtime/components/layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_vendor-f0095a1c.js"
+      "_index-3549ff43.js"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
-    "file": "error.svelte-165b6cc8.js",
+    "file": "error.svelte-c6ab1df4.js",
     "src": ".svelte-kit/runtime/components/error.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_vendor-f0095a1c.js"
+      "_index-3549ff43.js"
+    ]
+  },
+  "src/routes/games/picross.svelte": {
+    "file": "pages/games/picross.svelte-5067fadf.js",
+    "src": "src/routes/games/picross.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-3549ff43.js"
+    ],
+    "css": [
+      "assets/pages/games/picross.svelte-e29f0b88.css"
+    ]
+  },
+  "src/routes/games.svelte": {
+    "file": "pages/games.svelte-580eb88b.js",
+    "src": "src/routes/games.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-3549ff43.js"
+    ],
+    "css": [
+      "assets/pages/games.svelte-432d2dc6.css"
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-21a6a500.js",
+    "file": "pages/index.svelte-ba813fb4.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_vendor-f0095a1c.js"
+      "_index-3549ff43.js"
     ],
     "css": [
-      "assets/pages/index.svelte-df8f2dab.css"
+      "assets/pages/games.svelte-432d2dc6.css"
     ]
   },
-  "_vendor-f0095a1c.js": {
-    "file": "chunks/vendor-f0095a1c.js"
+  "_index-3549ff43.js": {
+    "file": "chunks/index-3549ff43.js"
   }
 }
