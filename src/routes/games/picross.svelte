@@ -1,18 +1,16 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import { Cell, CellType, CellStatus } from "./picross_scripts/cell"  ;
+    import { CellType, CellStatus } from "./picross_scripts/cell"  ;
     import { Grid } from "./picross_scripts/grid";
     import { ID } from "./picross_scripts/id";
 
-    let grid = new Grid;
-
-    async function onRightClick(e) {
-        if (Array.from(e.target.classList).includes("box")) {
-            boxClicked(e);
-        }
+    enum Click {
+        left = 1,
+        right = 2,
     }
 
-    async function logEvent(e) {
+    let grid = new Grid;
+
+    async function logEvent(e: Event) {
         console.log(e);
     }
 
@@ -20,19 +18,19 @@
         grid = grid
     }
 
-    async function boxClicked(e) {
-        logEvent(e);
+    async function boxClicked(e: MouseEvent) {
+        // logEvent(e);
         let id = new ID(e);
 
         let cell = grid.at_id(id);
 
         if (cell.status == CellStatus.unClicked) {
-            if (e.type == "click") {
+            if (e.buttons == Click.left) {
                 grid.setStatus(
                     id,
                     cell.type == CellType.goal ? CellStatus.correct : CellStatus.incorrect
                 )
-            } else {
+            } else if (e.buttons == Click.right) {
                 grid.setStatus(
                     id,
                     cell.type == CellType.death ? CellStatus.correct : CellStatus.incorrect
@@ -59,7 +57,7 @@
                 <tr>
                 {#each row as _, x}
                     <td>
-                        <button on:click={boxClicked} type=button id="{x}_{y}" class="box {grid.at(x, y).getStyle()}">
+                        <button on:mousedown={boxClicked} on:mouseover={boxClicked} on:focus type=button id="{x}_{y}" class="box {grid.at(x, y).getStyle()}">
                             {grid.at(x, y).getStatusChar()}
                         </button>
                     </td>
@@ -121,4 +119,4 @@
     }
 </style>
 
-<svelte:body on:contextmenu|preventDefault={onRightClick} on:dragstart|preventDefault={logEvent}/>
+<svelte:body on:contextmenu|preventDefault on:dragstart|preventDefault on:selectstart|preventDefault/>

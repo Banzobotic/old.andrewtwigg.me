@@ -1,4 +1,4 @@
-import { Cell, CellStatus, CellType } from "./cell"
+import { Cell, CellStatus } from "./cell"
 import type { ID } from "./id"
 
 export { Grid }
@@ -20,7 +20,7 @@ class Grid {
         return this.grid[id.y][id.x]
     }
 
-    at(x, y) {
+    at(x: number, y: number) {
         return this.grid[y][x]
     }
 
