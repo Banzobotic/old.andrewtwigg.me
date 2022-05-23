@@ -15,24 +15,16 @@ class Cell {
     status: CellStatus;
     type: CellType;
 
-    constructor(type: CellType) {
+    constructor() {
         this.status = CellStatus.unClicked;
-        this.type = type;
+        this.type = Math.random() < 0.5 ? CellType.mine : CellType.empty;
     }
 
     getStatusChar() {
-        if (this.status == CellStatus.incorrect) {
-            return "X"
-        } else {
-            return ""
-        }
+        return this.status == CellStatus.incorrect ? "X" : "";
     }
 
     getStyle() {
-        if (this.status == CellStatus.unClicked) {
-            return "box-unClicked"
-        } else {
-            return `box-${this.type}`
-        }
+        return this.status == CellStatus.unClicked ? "box-unClicked" : `box-${this.type}`
     }
 }

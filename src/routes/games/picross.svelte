@@ -1,17 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Cell, CellType, CellStatus } from "./cell"
-    
-
-    function getRandomCell() {
-        let random = Math.random();
-
-        if (random < 0.5) {
-            return new Cell(CellType.mine)
-        } else {
-            return new Cell(CellType.empty)
-        }
-    }
+    import { Cell, CellType, CellStatus } from "./picross_scripts/cell"  
 
     let grid: Array<Array<Cell>> = [];
 
@@ -20,7 +9,7 @@
         for (let i = 0; i < 10; i++) {
             grid[i] = [];
             for (let j = 0; j < 10; j++) {
-                grid[i].push(getRandomCell());
+                grid[i].push(new Cell);
             }
         }
         console.log(grid);
@@ -30,7 +19,6 @@
         if (Array.from(e.target.classList).includes("box")) {
             boxClicked(e);
         }
-        return false;
     }
 
     async function logEvent(e) {
