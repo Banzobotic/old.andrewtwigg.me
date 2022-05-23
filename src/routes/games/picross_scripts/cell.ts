@@ -7,8 +7,8 @@ enum CellStatus {
 }
 
 enum CellType {
-    mine = "mine",
-    empty = "empty",
+    goal = "mine",
+    death = "empty",
 }
 
 class Cell {
@@ -17,7 +17,7 @@ class Cell {
 
     constructor() {
         this.status = CellStatus.unClicked;
-        this.type = Math.random() < 0.5 ? CellType.mine : CellType.empty;
+        this.type = Math.random() < 0.5 ? CellType.goal : CellType.death;
     }
 
     getStatusChar() {

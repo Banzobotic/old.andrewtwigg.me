@@ -1,20 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Cell, CellType, CellStatus } from "./picross_scripts/cell"  
+    import { Cell, CellType, CellStatus } from "./picross_scripts/cell"  ;
+    import { Grid } from "./picross_scripts/grid";
+    import { ID } from "./picross_scripts/id";
 
-    let grid: Array<Array<Cell>> = [];
+    let grid = new Grid;
 
-    onMount(() => {
-        console.log("Starting js");
-        for (let i = 0; i < 10; i++) {
-            grid[i] = [];
-            for (let j = 0; j < 10; j++) {
-                grid[i].push(new Cell);
-            }
-        }
-        console.log(grid);
-    })
-    
     async function onRightClick(e) {
         if (Array.from(e.target.classList).includes("box")) {
             boxClicked(e);
@@ -25,30 +16,31 @@
         console.log(e);
     }
 
+    function forceUpdate() {
+        grid = grid
+    }
+
     async function boxClicked(e) {
         logEvent(e);
-        let id = e.target.id.split("_");
+        let id = new ID(e);
 
-        let x = parseInt(id[0]);
-        let y = parseInt(id[1]);
-
-        let cell = grid[y][x];
+        let cell = grid.at_id(id);
 
         if (cell.status == CellStatus.unClicked) {
             if (e.type == "click") {
-                if (cell.type == CellType.empty) {
-                    grid[y][x].status = CellStatus.correct;
-                } else {
-                    grid[y][x].status = CellStatus.incorrect;
-                }
+                grid.setStatus(
+                    id,
+                    cell.type == CellType.goal ? CellStatus.correct : CellStatus.incorrect
+                )
             } else {
-                if (cell.type == CellType.mine) {
-                    grid[y][x].status = CellStatus.correct;
-                } else {
-                    grid[y][x].status = CellStatus.incorrect;
-                }
+                grid.setStatus(
+                    id,
+                    cell.type == CellType.death ? CellStatus.correct : CellStatus.incorrect
+                )
             }
         }
+
+        forceUpdate();
     }
 </script>
 
@@ -63,11 +55,13 @@
 
     <main>
         <table class="grid">
-            {#each grid as row, y}
+            {#each grid.grid as row, y}
                 <tr>
                 {#each row as _, x}
                     <td>
-                    <button on:click={boxClicked} type=button id="{x}_{y}" class="box {grid[y][x].getStyle()}">{grid[y][x].getStatusChar()}</button>
+                        <button on:click={boxClicked} type=button id="{x}_{y}" class="box {grid.at(x, y).getStyle()}">
+                            {grid.at(x, y).getStatusChar()}
+                        </button>
                     </td>
                 {/each}
                 </tr>
@@ -127,4 +121,4 @@
     }
 </style>
 
-<svelte:body on:contextmenu|preventDefault={onRightClick}/>
+<svelte:body on:contextmenu|preventDefault={onRightClick} on:dragstart|preventDefault={logEvent}/>
