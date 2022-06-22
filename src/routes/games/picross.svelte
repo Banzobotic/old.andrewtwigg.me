@@ -8,7 +8,11 @@
         right = 2,
     }
 
-    let grid = new Grid;
+    let grid_size = 10;
+
+    let grid = new Grid(grid_size);
+
+    console.log(grid)
 
     async function logEvent(e: Event) {
         console.log(e);
@@ -53,15 +57,43 @@
 
     <main>
         <table class="grid">
-            {#each grid.grid as row, y}
+            {#each Array(grid_size + 1) as _, y}
                 <tr>
-                {#each row as _, x}
-                    <td>
-                        <button on:mousedown={boxClicked} on:mouseover={boxClicked} on:focus type=button id="{x}_{y}" class="box {grid.at(x, y).getStyle()}">
-                            {grid.at(x, y).getStatusChar()}
-                        </button>
-                    </td>
-                {/each}
+                    {#each Array(grid_size + 1) as _, x}
+                        {#if y == 0}
+                            {#if x == 0}
+                                <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px"></td>
+                            {:else}
+                                <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px">
+                                    <table style="margin: auto">
+                                        {#each Array(5) as _, i}
+                                            <tr><td style="color: white;">
+                                                <pre style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{grid.column_positions[x][4-i]}</pre>
+                                            </td></tr>
+                                        {/each}
+                                    </table>
+                                </td>
+                            {/if}
+                        {:else}
+                            {#if x == 0}
+                                <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px">
+                                    <table><tr>
+                                        {#each Array(5) as _, i}
+                                            <td style="color: white; padding: 5px; text-align: right;">
+                                                <pre style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{grid.row_positions[y][4-i]}</pre>
+                                            </td>
+                                        {/each}
+                                    </tr></table>
+                                </td>
+                            {:else}
+                                <td style="padding: 0; border: 1px solid #ccc;">
+                                    <button on:mousedown={boxClicked} on:mouseover={boxClicked} on:focus type=button id="{x}_{y}" class="box {grid.at(x, y).getStyle()}">
+                                        {grid.at(x, y).getStatusChar()}
+                                    </button>
+                                </td>
+                            {/if}
+                        {/if}
+                    {/each}
                 </tr>
             {/each}
         </table>
@@ -93,7 +125,7 @@
 
     .grid {
         margin: auto;
-        display: table;
+        border-spacing: 0;
     }
 
     .box {
@@ -110,12 +142,12 @@
         background-color: white;
     }
 
-    .box-mine {
-        background-color: aqua;
+    .box-goal {
+        background-color: #188dd6;
     }
 
-    .box-empty {
-        background-color: grey;
+    .box-death {
+        background-color: #bbb;
     }
 </style>
 

@@ -7,8 +7,8 @@ enum CellStatus {
 }
 
 enum CellType {
-    goal = "mine",
-    death = "empty",
+    goal = "goal",
+    death = "death",
 }
 
 class Cell {
