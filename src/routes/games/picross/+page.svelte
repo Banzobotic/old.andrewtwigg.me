@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Navbar from "../../Navbar.svelte";
+
     import { CellType, CellStatus } from "./cell"  ;
     import { Grid } from "./grid";
     import { ID } from "./id";
@@ -53,7 +55,7 @@
 </head>
 
 <body>
-    <p><a href="/">Home</a></p>
+    <Navbar active=""/>
 
     <main>
         <table class="grid">
@@ -102,15 +104,14 @@
 
 <style>
     body {
-        background-color: #222;
-        height: 100vh;
+        background-color: #1f2125;
         margin: 0;
     }
 
     main {
         text-align: center;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        height: 100%;
+        margin-top: 5vmin;
     }
 
     /* h1 {

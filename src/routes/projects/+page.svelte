@@ -3,11 +3,11 @@
 </script>
 
 <head>
-    <title>Games</title>
+    <title>Projects</title>
 </head>
 
 <body>
-    <Navbar active={"games"}/>
+    <Navbar active={"projects"}/>
 </body>
 
 <style>
