@@ -48,51 +48,49 @@
 </head>
 
 <body>
-    <Navbar active=""/>
+    <Navbar/>
 
-    <main>
-        <table class="grid">
-            {#each Array(grid_size + 1) as _, y}
-                <tr>
-                    {#each Array(grid_size + 1) as _, x}
-                        {#if y == 0}
-                            {#if x == 0}
-                                <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px"></td>
-                            {:else}
-                                <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px">
-                                    <table style="margin: auto">
-                                        {#each Array(5) as _, i}
-                                            <tr><td style="color: white;">
-                                                <pre style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{grid.column_positions[x][4-i]}</pre>
-                                            </td></tr>
-                                        {/each}
-                                    </table>
-                                </td>
-                            {/if}
+    <table class="grid">
+        {#each Array(grid_size + 1) as _, y}
+            <tr>
+                {#each Array(grid_size + 1) as _, x}
+                    {#if y == 0}
+                        {#if x == 0}
+                            <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px"></td>
                         {:else}
-                            {#if x == 0}
-                                <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px">
-                                    <table><tr>
-                                        {#each Array(5) as _, i}
-                                            <td style="color: white; padding: 5px; text-align: right;">
-                                                <pre style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{grid.row_positions[y][4-i]}</pre>
-                                            </td>
-                                        {/each}
-                                    </tr></table>
-                                </td>
-                            {:else}
-                                <td style="padding: 0; border: 1px solid #ccc;">
-                                    <button on:mousedown={boxClicked} on:mouseover={boxClicked} on:focus type=button id="{x}_{y}" class="box {grid.at(x, y).getStyle()}">
-                                        {grid.at(x, y).getStatusChar()}
-                                    </button>
-                                </td>
-                            {/if}
+                            <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px">
+                                <table style="margin: auto">
+                                    {#each Array(5) as _, i}
+                                        <tr><td style="color: white;">
+                                            <pre style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{grid.column_positions[x][4-i]}</pre>
+                                        </td></tr>
+                                    {/each}
+                                </table>
+                            </td>
                         {/if}
-                    {/each}
-                </tr>
-            {/each}
-        </table>
-    </main>
+                    {:else}
+                        {#if x == 0}
+                            <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px">
+                                <table><tr>
+                                    {#each Array(5) as _, i}
+                                        <td style="color: white; padding: 5px; text-align: right;">
+                                            <pre style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{grid.row_positions[y][4-i]}</pre>
+                                        </td>
+                                    {/each}
+                                </tr></table>
+                            </td>
+                        {:else}
+                            <td style="padding: 0; border: 1px solid #ccc;">
+                                <button on:mousedown={boxClicked} on:mouseover={boxClicked} on:focus type=button id="{x}_{y}" class="box {grid.at(x, y).getStyle()}">
+                                    {grid.at(x, y).getStatusChar()}
+                                </button>
+                            </td>
+                        {/if}
+                    {/if}
+                {/each}
+            </tr>
+        {/each}
+    </table>
 </body>
 
 <style>
@@ -101,25 +99,11 @@
         margin: 0;
     }
 
-    main {
-        text-align: center;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin-top: 5vmin;
-    }
-
-    /* h1 {
-        color: rgb(255, 83, 15);
-        font-size: 5vw;
-    } */
-
-    p {
-        font-size: 1.2vw;
-        margin: 0;
-    }
-
     .grid {
         margin: auto;
         border-spacing: 0;
+        text-align: center;
+        margin-top: 5vmin;
     }
 
     .box {

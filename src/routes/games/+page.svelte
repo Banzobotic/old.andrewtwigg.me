@@ -27,10 +27,25 @@
 </body>
 
 <style>
+    ::-webkit-scrollbar {
+        width: 0.6vw;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border: 4px solid transparent;
+        border-radius: 0.3vw;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    
     body {
         background-color: #1f2125;
         margin: 0;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        overflow: overlay;
     }
 
     .game_list {
@@ -63,5 +78,6 @@
 
     img {
         width: 12vw;
+        height: 12vw;
     }
 </style>

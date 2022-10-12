@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let active: string;
+    export let active: string = "";
 
     function get_active(link: string) {
         if (link == active) {
@@ -11,9 +11,9 @@
 </script>
 
 <div class="navbar">
-    <div class="header">Banzobotic</div>
+    <div class="header"><a href="/">Andrew Twigg</a></div>
     <div class="nav_options">
-        <a class="{get_active("home")}" href="/">Home</a>
+        <a class="{get_active("about")}" href="/about">About Me</a>
         <a class="{get_active("projects")}" href="/projects">Projects</a>
         <a class="{get_active("games")}" href="/games">Games</a>
     </div>
@@ -29,7 +29,11 @@
     .header {
         font-size: 4vw;
         margin: 1vw 0 1vw 8vw;
-        color: white;
+    }
+
+    .header a {
+        text-decoration: none;
+        color: #2dbecf;
     }
 
     .nav_options {
