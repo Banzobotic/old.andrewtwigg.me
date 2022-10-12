@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { CellType, CellStatus } from "./picross_scripts/cell"  ;
-    import { Grid } from "./picross_scripts/grid";
-    import { ID } from "./picross_scripts/id";
+    import { CellType, CellStatus } from "./cell"  ;
+    import { Grid } from "./grid";
+    import { ID } from "./id";
 
     enum Click {
         left = 1,

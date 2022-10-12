@@ -4,7 +4,7 @@ class ID {
     x: number;
     y: number;
 
-    constructor(e) {
+    constructor(e: any) {
         let id = e.target.id.split("_")
 
         this.x = parseInt(id[0]);
