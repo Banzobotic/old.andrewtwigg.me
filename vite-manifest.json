@@ -1,65 +1,84 @@
 {
   "node_modules/@sveltejs/kit/src/runtime/client/start.js": {
-    "file": "_app/immutable/start-2fb6e798.js",
+    "file": "_app/immutable/start-149e7bd0.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/client/start.js",
     "isEntry": true,
     "imports": [
-      "_index-234dd142.js",
-      "_singletons-d6e04be4.js"
+      "_index-9564b846.js",
+      "_singletons-f9af9335.js"
     ],
     "dynamicImports": [
       ".svelte-kit/generated/nodes/0.js",
       ".svelte-kit/generated/nodes/1.js",
       ".svelte-kit/generated/nodes/2.js",
       ".svelte-kit/generated/nodes/3.js",
-      ".svelte-kit/generated/nodes/4.js"
+      ".svelte-kit/generated/nodes/4.js",
+      ".svelte-kit/generated/nodes/5.js"
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/layout.svelte": {
-    "file": "_app/immutable/components/layout.svelte-28aab954.js",
+    "file": "_app/immutable/components/layout.svelte-e0fc921d.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/components/layout.svelte",
     "isEntry": true,
     "imports": [
-      "_index-234dd142.js"
+      "_index-9564b846.js"
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
-    "file": "_app/immutable/components/error.svelte-c2509b9a.js",
+    "file": "_app/immutable/components/error.svelte-8c6b84d7.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
     "isEntry": true,
     "imports": [
-      "_index-234dd142.js",
-      "_singletons-d6e04be4.js"
+      "_index-9564b846.js",
+      "_singletons-f9af9335.js"
     ]
   },
   "src/routes/+page.svelte": {
-    "file": "_app/immutable/components/pages/_page.svelte-ff4abde0.js",
+    "file": "_app/immutable/components/pages/_page.svelte-b4be7c1b.js",
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_index-234dd142.js"
+      "_index-9564b846.js",
+      "_Navbar-840fa1dc.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-e64e2751.css"
+      "_app/immutable/assets/_page-f638e9cd.css"
     ]
   },
   "src/routes/games/+page.svelte": {
-    "file": "_app/immutable/components/pages/games/_page.svelte-90cf227d.js",
+    "file": "_app/immutable/components/pages/games/_page.svelte-1a0613fd.js",
     "src": "src/routes/games/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_index-234dd142.js"
+      "_index-9564b846.js",
+      "_Navbar-840fa1dc.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page-3604a0f6.css"
     ]
   },
   "src/routes/games/picross/+page.svelte": {
-    "file": "_app/immutable/components/pages/games/picross/_page.svelte-0f49122b.js",
+    "file": "_app/immutable/components/pages/games/picross/_page.svelte-26aab12c.js",
     "src": "src/routes/games/picross/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_index-234dd142.js"
+      "_index-9564b846.js",
+      "_Navbar-840fa1dc.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-e810bc88.css"
+      "_app/immutable/assets/_page-175db560.css"
+    ]
+  },
+  "src/routes/projects/+page.svelte": {
+    "file": "_app/immutable/components/pages/projects/_page.svelte-9386bddf.js",
+    "src": "src/routes/projects/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-9564b846.js",
+      "_Navbar-840fa1dc.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page-3604a0f6.css"
     ]
   },
   "src/routes/+layout.ts": {
@@ -70,20 +89,29 @@
       "__layout-1daba58d.js"
     ]
   },
-  "_singletons-d6e04be4.js": {
-    "file": "_app/immutable/chunks/singletons-d6e04be4.js",
+  "_singletons-f9af9335.js": {
+    "file": "_app/immutable/chunks/singletons-f9af9335.js",
     "imports": [
-      "_index-234dd142.js"
+      "_index-9564b846.js"
     ]
   },
-  "_index-234dd142.js": {
-    "file": "_app/immutable/chunks/index-234dd142.js"
+  "_index-9564b846.js": {
+    "file": "_app/immutable/chunks/index-9564b846.js"
   },
   "__layout-1daba58d.js": {
     "file": "_app/immutable/chunks/_layout-1daba58d.js"
   },
+  "_Navbar-840fa1dc.js": {
+    "file": "_app/immutable/chunks/Navbar-840fa1dc.js",
+    "imports": [
+      "_index-9564b846.js"
+    ],
+    "css": [
+      "_app/immutable/assets/Navbar-b40dca15.css"
+    ]
+  },
   ".svelte-kit/generated/nodes/0.js": {
-    "file": "_app/immutable/chunks/0-1ad23bba.js",
+    "file": "_app/immutable/chunks/0-a3a02b83.js",
     "src": ".svelte-kit/generated/nodes/0.js",
     "isDynamicEntry": true,
     "imports": [
@@ -92,7 +120,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/1.js": {
-    "file": "_app/immutable/chunks/1-1e4fe08c.js",
+    "file": "_app/immutable/chunks/1-9352437d.js",
     "src": ".svelte-kit/generated/nodes/1.js",
     "isDynamicEntry": true,
     "imports": [
@@ -100,7 +128,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/2.js": {
-    "file": "_app/immutable/chunks/2-e4e6b68e.js",
+    "file": "_app/immutable/chunks/2-87031153.js",
     "src": ".svelte-kit/generated/nodes/2.js",
     "isDynamicEntry": true,
     "imports": [
@@ -108,7 +136,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/3.js": {
-    "file": "_app/immutable/chunks/3-7f0558e9.js",
+    "file": "_app/immutable/chunks/3-65bf085e.js",
     "src": ".svelte-kit/generated/nodes/3.js",
     "isDynamicEntry": true,
     "imports": [
@@ -116,19 +144,35 @@
     ]
   },
   ".svelte-kit/generated/nodes/4.js": {
-    "file": "_app/immutable/chunks/4-fdc9ebe9.js",
+    "file": "_app/immutable/chunks/4-619ab1b5.js",
     "src": ".svelte-kit/generated/nodes/4.js",
     "isDynamicEntry": true,
     "imports": [
       "src/routes/games/picross/+page.svelte"
     ]
   },
+  ".svelte-kit/generated/nodes/5.js": {
+    "file": "_app/immutable/chunks/5-be68753d.js",
+    "src": ".svelte-kit/generated/nodes/5.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/routes/projects/+page.svelte"
+    ]
+  },
   "src/routes/+page.css": {
-    "file": "_app/immutable/assets/_page-e64e2751.css",
+    "file": "_app/immutable/assets/_page-f638e9cd.css",
     "src": "src/routes/+page.css"
   },
+  "src/routes/projects/+page.css": {
+    "file": "_app/immutable/assets/_page-3604a0f6.css",
+    "src": "src/routes/projects/+page.css"
+  },
   "src/routes/games/picross/+page.css": {
-    "file": "_app/immutable/assets/_page-e810bc88.css",
+    "file": "_app/immutable/assets/_page-175db560.css",
     "src": "src/routes/games/picross/+page.css"
+  },
+  "Navbar.css": {
+    "file": "_app/immutable/assets/Navbar-b40dca15.css",
+    "src": "Navbar.css"
   }
 }
