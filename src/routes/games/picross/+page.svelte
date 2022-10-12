@@ -14,18 +14,11 @@
 
     let grid = new Grid(grid_size);
 
-    console.log(grid)
-
-    async function logEvent(e: Event) {
-        console.log(e);
-    }
-
     function forceUpdate() {
         grid = grid
     }
 
     async function boxClicked(e: MouseEvent) {
-        // logEvent(e);
         let id = new ID(e);
 
         let cell = grid.at_id(id);

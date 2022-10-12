@@ -8,6 +8,8 @@
 
 <body>
     <Navbar active={"projects"}/>
+
+    
 </body>
 
 <style>

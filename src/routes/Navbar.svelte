@@ -23,6 +23,7 @@
     .navbar {
         background-color: rgb(17, 17, 20);
         display: flex;
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 
     .header {
