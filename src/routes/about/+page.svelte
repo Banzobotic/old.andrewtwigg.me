@@ -8,7 +8,7 @@
 
 <body>
     <Navbar active={"about"}/>
-
+    
     <div class="content">
         <div class="inner">
             <div class="header">Robotics</div>

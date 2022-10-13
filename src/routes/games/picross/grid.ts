@@ -11,23 +11,65 @@ class Grid {
 
     constructor(size: number) {
         this.size = size;
-        this.grid = [];
-        for (let i = 1; i <= this.size; i++) {
-            this.grid[i] = [];
-            for (let j = 1; j <= this.size; j++) {
-                this.grid[i][j] = new Cell;
+
+        let sum;
+        let count;
+        let total;
+
+        // do {
+            this.grid = [];
+            for (let i = 1; i <= this.size; i++) {
+                this.grid[i] = [];
+                for (let j = 1; j <= this.size; j++) {
+                    this.grid[i][j] = new Cell;
+                }
             }
-        }
 
-        this.column_positions = [];
-        for (let i = 1; i <= this.size; i++) {
-            this.column_positions[i] = this.getPositionsInColumn(i);
-        }
+            this.column_positions = [];
+            for (let i = 1; i <= this.size; i++) {
+                this.column_positions[i] = this.getPositionsInColumn(i);
+            }
 
-        this.row_positions = [];
-        for (let i = 1; i <= this.size; i++) {
-            this.row_positions[i] = this.getPositionsInRow(i);
+            this.row_positions = [];
+            for (let i = 1; i <= this.size; i++) {
+                this.row_positions[i] = this.getPositionsInRow(i);
+            }
+
+            // Check board difficulty
+            sum = 0;
+            count = 0;
+            total = 0;
+
+            for (let i = 1; i <= 10; i++) {
+                for (let j = 0; j <= 4; j++) {
+                    let num1 = this.get_int(this.column_positions[i][j]);
+                    let num2 = this.get_int(this.row_positions[i][j]);
+
+                    sum += num1;
+
+                    if (num1 !== 0) {
+                        count += 1;
+                        total += num1;
+                    }
+                    if (num2 !== 0) {
+                        count += 1;
+                        total += num2;
+                    }
+                }
+            }
+
+            console.log(sum);
+            console.log(total / count);
+            console.log(sum * (total / count))
+        // } while (sum * (total / count) < 100)
+    }
+
+    private get_int(n: string) {
+        let number = parseInt(n);
+        if (isNaN(number)) {
+            return 0;
         }
+        return number;
     }
 
     at_id(id: ID) {

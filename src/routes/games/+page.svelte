@@ -9,12 +9,12 @@
 <body>
     <Navbar active={"games"}/>
     
-    <div class="game_list">
-        <a class="game" href="/games/picross">
+    <div class="list">
+        <a class="item" href="/games/picross">
             <img src="/images/picross.png" alt="Picross Board">
-            <div class="game_info">
-                <div class="game_title">Picross</div>
-                <div class="game_description">
+            <div class="info">
+                <div class="title">Picross</div>
+                <div class="description">
                     Try to fill in all the cells correctly
                     <br><br>
                     The numbers show how many cells are next to each other and in what order
@@ -48,29 +48,29 @@
         overflow: overlay;
     }
 
-    .game_list {
+    .list {
         margin: 0 auto;
         margin-top: 6vh;
         max-width: 50vw;
     }
 
-    .game {
+    .item {
         display: flex;
         margin: 4vh 0;
         margin-right: 10vw;
         text-decoration: none;
     }
 
-    .game_info {
+    .info {
         margin-left: 1vw
     }
     
-    .game_title {
+    .title {
         color: #2dbecf;
         font-size: 3.5vw;
     }
 
-    .game_description {
+    .description {
         color: white;
         font-size: 0.9vw;
         margin-top: 1vh;

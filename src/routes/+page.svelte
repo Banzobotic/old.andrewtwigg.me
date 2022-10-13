@@ -27,7 +27,7 @@
 
         <div class="title">Latest Project</div>
         <a class="item" href="/projects/brainfuck">
-            <img src="/images/brainfuck.png" alt="Brainfuck">
+            <img src="/images/brainfuck/logo.png" alt="Brainfuck">
             <div class="info">
                 <div class="title">BF Interpreter</div>
                 <div class="description">

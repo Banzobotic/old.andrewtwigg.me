@@ -9,12 +9,12 @@
 <body>
     <Navbar active={"projects"}/>
 
-    <div class="project_list">
-        <a class="project" href="/projects/brainfuck">
-            <img src="/images/brainfuck.png" alt="Brainfuck">
-            <div class="project_info">
-                <div class="project_title">BF Interpreter</div>
-                <div class="project_description">
+    <div class="list">
+        <a class="item" href="/projects/brainfuck">
+            <img src="/images/brainfuck/logo.png" alt="Brainfuck">
+            <div class="info">
+                <div class="title">BF Interpreter</div>
+                <div class="description">
                     An interpreter for the <a href="https://en.wikipedia.org/wiki/Brainfuck">Brainf**k</a> programming language
                     <br><br>
                     Written in Rust
@@ -46,29 +46,29 @@
         overflow: overlay;
     }
 
-    .project_list {
+    .list {
         margin: 0 auto;
         margin-top: 6vh;
         max-width: 50vw;
     }
 
-    .project {
+    .item {
         display: flex;
         margin: 4vh 0;
         margin-right: 10vw;
         text-decoration: none;
     }
 
-    .project_info {
+    .info {
         margin-left: 1vw
     }
     
-    .project_title {
+    .title {
         color: #2dbecf;
         font-size: 3.5vw;
     }
 
-    .project_description {
+    .description {
         color: white;
         font-size: 0.9vw;
         margin-top: 1vh;
