@@ -1,11 +1,11 @@
 {
   "node_modules/@sveltejs/kit/src/runtime/client/start.js": {
-    "file": "_app/immutable/start-3870acad.js",
+    "file": "_app/immutable/start-068caea8.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/client/start.js",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_singletons-4cf0774e.js"
+      "_singletons-c7ea9e93.js"
     ],
     "dynamicImports": [
       ".svelte-kit/generated/nodes/0.js",
@@ -27,16 +27,16 @@
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
-    "file": "_app/immutable/components/error.svelte-3c5041c2.js",
+    "file": "_app/immutable/components/error.svelte-8d053d5c.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_singletons-4cf0774e.js"
+      "_singletons-c7ea9e93.js"
     ]
   },
   "src/routes/+page.svelte": {
-    "file": "_app/immutable/components/pages/_page.svelte-8eadfe20.js",
+    "file": "_app/immutable/components/pages/_page.svelte-d371e285.js",
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
@@ -60,7 +60,7 @@
     ]
   },
   "src/routes/games/+page.svelte": {
-    "file": "_app/immutable/components/pages/games/_page.svelte-7eb2503d.js",
+    "file": "_app/immutable/components/pages/games/_page.svelte-86cbc78e.js",
     "src": "src/routes/games/+page.svelte",
     "isEntry": true,
     "imports": [
@@ -68,11 +68,11 @@
       "_Navbar-d8336603.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-18be72f6.css"
+      "_app/immutable/assets/_page-a8e2f55c.css"
     ]
   },
   "src/routes/games/picross/+page.svelte": {
-    "file": "_app/immutable/components/pages/games/picross/_page.svelte-744ed549.js",
+    "file": "_app/immutable/components/pages/games/picross/_page.svelte-e9c15dd3.js",
     "src": "src/routes/games/picross/+page.svelte",
     "isEntry": true,
     "imports": [
@@ -84,7 +84,7 @@
     ]
   },
   "src/routes/projects/+page.svelte": {
-    "file": "_app/immutable/components/pages/projects/_page.svelte-10906a51.js",
+    "file": "_app/immutable/components/pages/projects/_page.svelte-2950f495.js",
     "src": "src/routes/projects/+page.svelte",
     "isEntry": true,
     "imports": [
@@ -92,15 +92,19 @@
       "_Navbar-d8336603.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-47888f74.css"
+      "_app/immutable/assets/_page-3c939099.css"
     ]
   },
   "src/routes/projects/brainfuck/+page.svelte": {
-    "file": "_app/immutable/components/pages/projects/brainfuck/_page.svelte-489c5562.js",
+    "file": "_app/immutable/components/pages/projects/brainfuck/_page.svelte-a54c5a72.js",
     "src": "src/routes/projects/brainfuck/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_index-13fba489.js"
+      "_index-13fba489.js",
+      "_Navbar-d8336603.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page-65bcb629.css"
     ]
   },
   "src/routes/+layout.ts": {
@@ -111,8 +115,8 @@
       "__layout-1daba58d.js"
     ]
   },
-  "_singletons-4cf0774e.js": {
-    "file": "_app/immutable/chunks/singletons-4cf0774e.js",
+  "_singletons-c7ea9e93.js": {
+    "file": "_app/immutable/chunks/singletons-c7ea9e93.js",
     "imports": [
       "_index-13fba489.js"
     ]
@@ -142,7 +146,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/1.js": {
-    "file": "_app/immutable/chunks/1-11876c29.js",
+    "file": "_app/immutable/chunks/1-55f263b0.js",
     "src": ".svelte-kit/generated/nodes/1.js",
     "isDynamicEntry": true,
     "imports": [
@@ -150,7 +154,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/2.js": {
-    "file": "_app/immutable/chunks/2-3172324f.js",
+    "file": "_app/immutable/chunks/2-5531c5a6.js",
     "src": ".svelte-kit/generated/nodes/2.js",
     "isDynamicEntry": true,
     "imports": [
@@ -166,7 +170,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/4.js": {
-    "file": "_app/immutable/chunks/4-2fc3299d.js",
+    "file": "_app/immutable/chunks/4-49bb9415.js",
     "src": ".svelte-kit/generated/nodes/4.js",
     "isDynamicEntry": true,
     "imports": [
@@ -174,7 +178,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/5.js": {
-    "file": "_app/immutable/chunks/5-bda6ef68.js",
+    "file": "_app/immutable/chunks/5-aa885fcc.js",
     "src": ".svelte-kit/generated/nodes/5.js",
     "isDynamicEntry": true,
     "imports": [
@@ -182,7 +186,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/6.js": {
-    "file": "_app/immutable/chunks/6-af6b964f.js",
+    "file": "_app/immutable/chunks/6-0ab5b13f.js",
     "src": ".svelte-kit/generated/nodes/6.js",
     "isDynamicEntry": true,
     "imports": [
@@ -190,7 +194,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/7.js": {
-    "file": "_app/immutable/chunks/7-28082785.js",
+    "file": "_app/immutable/chunks/7-5143b47c.js",
     "src": ".svelte-kit/generated/nodes/7.js",
     "isDynamicEntry": true,
     "imports": [
@@ -201,24 +205,28 @@
     "file": "_app/immutable/assets/_page-bb626a75.css",
     "src": "src/routes/+page.css"
   },
+  "src/routes/games/picross/+page.css": {
+    "file": "_app/immutable/assets/_page-606f31fe.css",
+    "src": "src/routes/games/picross/+page.css"
+  },
+  "src/routes/projects/brainfuck/+page.css": {
+    "file": "_app/immutable/assets/_page-65bcb629.css",
+    "src": "src/routes/projects/brainfuck/+page.css"
+  },
+  "src/routes/about/+page.css": {
+    "file": "_app/immutable/assets/_page-afcdabab.css",
+    "src": "src/routes/about/+page.css"
+  },
+  "src/routes/projects/+page.css": {
+    "file": "_app/immutable/assets/_page-3c939099.css",
+    "src": "src/routes/projects/+page.css"
+  },
   "src/routes/games/+page.css": {
-    "file": "_app/immutable/assets/_page-18be72f6.css",
+    "file": "_app/immutable/assets/_page-a8e2f55c.css",
     "src": "src/routes/games/+page.css"
   },
   "Navbar.css": {
     "file": "_app/immutable/assets/Navbar-6e56ae72.css",
     "src": "Navbar.css"
-  },
-  "src/routes/games/picross/+page.css": {
-    "file": "_app/immutable/assets/_page-606f31fe.css",
-    "src": "src/routes/games/picross/+page.css"
-  },
-  "src/routes/projects/+page.css": {
-    "file": "_app/immutable/assets/_page-47888f74.css",
-    "src": "src/routes/projects/+page.css"
-  },
-  "src/routes/about/+page.css": {
-    "file": "_app/immutable/assets/_page-afcdabab.css",
-    "src": "src/routes/about/+page.css"
   }
 }
