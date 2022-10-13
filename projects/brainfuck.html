@@ -5,86 +5,86 @@
 		<link rel="icon" href="../favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta http-equiv="content-security-policy" content="">
-		<link href="../_app/immutable/assets/_page-65bcb629.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/_page-7314020f.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/Navbar-6e56ae72.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/start-068caea8.js">
+		<link rel="modulepreload" href="../_app/immutable/start-655857da.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-13fba489.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-c7ea9e93.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-ac3152a5.js">
 		<link rel="modulepreload" href="../_app/immutable/components/layout.svelte-2e9e131c.js">
 		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-b8ee4d7c.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-1daba58d.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/projects/brainfuck/_page.svelte-a54c5a72.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/projects/brainfuck/_page.svelte-061e4302.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/Navbar-d8336603.js">
 	</head>
 	<body>
 		<div>
 
 
-<head class="svelte-1bxmatr"><title class="svelte-1bxmatr">Home</title></head>
+<head class="svelte-1gogytf"><title class="svelte-1gogytf">Home</title></head>
 
-<body class="svelte-1bxmatr"><div class="navbar svelte-gscv8i"><div class="header svelte-gscv8i"><a href="/" class="svelte-gscv8i">Andrew Twigg</a></div>
+<body class="svelte-1gogytf"><div class="navbar svelte-gscv8i"><div class="header svelte-gscv8i"><a href="/" class="svelte-gscv8i">Andrew Twigg</a></div>
     <div class="nav_options svelte-gscv8i"><a class=" svelte-gscv8i" href="/about">About Me</a>
         <a class=" svelte-gscv8i" href="/projects">Projects</a>
         <a class=" svelte-gscv8i" href="/games">Games</a></div>
 </div>
 
-    <div class="content svelte-1bxmatr"><div class="inner svelte-1bxmatr"><div class="title svelte-1bxmatr">Brainf**k Interpreter</div>
+    <div class="content svelte-1gogytf"><div class="title svelte-1gogytf">Brainf**k Interpreter</div>
 
-            <div class="header svelte-1bxmatr">What is Brainf**k?</div>
-            <div class="text svelte-1bxmatr">Brainf**k (BF) is an esolang centred around a single array of bytes
-                <br class="svelte-1bxmatr"><br class="svelte-1bxmatr">
-                There are only 8 operators in BF:
-                <ul class="no_dot svelte-1bxmatr"><li class="svelte-1bxmatr">&gt; Increment the pointer position</li>
-                    <li class="svelte-1bxmatr">&lt; Deincrement the pointer position</li>
-                    <li class="svelte-1bxmatr">+ Increment the byte at the pointer</li>
-                    <li class="svelte-1bxmatr">- Deincrement the byte at the pointer</li>
-                    <li class="svelte-1bxmatr">. Output the byte at the data pointer</li>
-                    <li class="svelte-1bxmatr">, Accept one byte of input, storing it in the byte at the pointer</li>
-                    <li class="svelte-1bxmatr">[ If the byte at the pointer is zero, goto the corresponding ] operator</li>
-                    <li class="svelte-1bxmatr">] If the byte at the pointer is nonzero, goto the corresponding [ operator</li></ul>
-                Despite only having these 8 operators BF is (with an infinitely large array) turing complete
-            </div>
-            
-            <div class="header svelte-1bxmatr">Implementing Brainf**k</div>
-            <div class="text svelte-1bxmatr">Around the time that I found out about BF I was also learning the programming language Rust
-                <br class="svelte-1bxmatr"><br class="svelte-1bxmatr">
-                I decided to write my BF interpreter in Rust as it provided a great opportunity to start
-                getting to grips with Rust&#39;s match statements and iterators
-                <br class="svelte-1bxmatr"><br class="svelte-1bxmatr">
-                My brainf**k interpreter has 3 main parts:
-                <ol class="svelte-1bxmatr"><li class="svelte-1bxmatr">Read and parse the program</li>
-                    <li class="svelte-1bxmatr">Read input</li>
-                    <li class="svelte-1bxmatr">Interpret the program</li></ol>
-                Lets break down how I solved each of these presentations
-            </div>
+        <div class="header svelte-1gogytf">What is Brainf**k?</div>
+        <div class="text svelte-1gogytf">Brainf**k (BF) is an esolang centred around a single array of bytes
+            <br class="svelte-1gogytf"><br class="svelte-1gogytf">
+            There are only 8 operators in BF:
+            <ul class="no_dot svelte-1gogytf"><li class="svelte-1gogytf">&gt; Increment the pointer position</li>
+                <li class="svelte-1gogytf">&lt; Deincrement the pointer position</li>
+                <li class="svelte-1gogytf">+ Increment the byte at the pointer</li>
+                <li class="svelte-1gogytf">- Deincrement the byte at the pointer</li>
+                <li class="svelte-1gogytf">. Output the byte at the data pointer</li>
+                <li class="svelte-1gogytf">, Accept one byte of input, storing it in the byte at the pointer</li>
+                <li class="svelte-1gogytf">[ If the byte at the pointer is zero, goto the corresponding ] operator</li>
+                <li class="svelte-1gogytf">] If the byte at the pointer is nonzero, goto the corresponding [ operator</li></ul>
+            Despite only having these 8 operators BF is (with an infinitely large array) turing complete
+        </div>
+        
+        <div class="header svelte-1gogytf">Implementing Brainf**k</div>
+        <div class="text svelte-1gogytf">Around the time that I found out about BF I was also learning the programming language Rust
+            <br class="svelte-1gogytf"><br class="svelte-1gogytf">
+            I decided to write my BF interpreter in Rust as it provided a great opportunity to start
+            getting to grips with Rust&#39;s match statements and iterators
+            <br class="svelte-1gogytf"><br class="svelte-1gogytf">
+            My brainf**k interpreter has 3 main parts:
+            <ol class="svelte-1gogytf"><li class="svelte-1gogytf">Read and parse the program</li>
+                <li class="svelte-1gogytf">Read input</li>
+                <li class="svelte-1gogytf">Interpret the program</li></ol>
+            Lets break down how I solved each of these presentations
+        </div>
 
-            <div class="sub_header svelte-1bxmatr">Reading and parsing the program</div>
-            <div class="text svelte-1bxmatr">The program functions as an interactive session interpreter,
-                so it will keep taking lines of user input from the terminal until the user enters &quot;run&quot;
-                <br class="svelte-1bxmatr"><br class="svelte-1bxmatr">
-                For every line of user input the program will iterate through all the characters 
-                and filter out any that aren&#39;t one of the 8 operators
-                <br class="svelte-1bxmatr"><br class="svelte-1bxmatr">
-                <img style="width: 25vw" src="/images/brainfuck/iterator.png" alt="Rust code showing iterator I used" class="svelte-1bxmatr"></div>
+        <div class="sub_header svelte-1gogytf">Reading and parsing the program</div>
+        <div class="text svelte-1gogytf">The program functions as an interactive session interpreter,
+            so it will keep taking lines of user input from the terminal until the user enters &quot;run&quot;
+            <br class="svelte-1gogytf"><br class="svelte-1gogytf">
+            For every line of user input the program will iterate through all the characters 
+            and filter out any that aren&#39;t one of the 8 operators
+            <br class="svelte-1gogytf"><br class="svelte-1gogytf">
+            <img style="width: 25vw" src="/images/brainfuck/iterator.png" alt="Rust code showing iterator I used" class="svelte-1gogytf"></div>
 
-            <div class="sub_header svelte-1bxmatr">Reading user input</div>
-            <div class="text svelte-1bxmatr">I made the design decision of having all user input entered before the program is interpreted. 
-                <br class="svelte-1bxmatr"><br class="svelte-1bxmatr">
-                This meant that all input could be entered quickly on a single line
-            </div>
+        <div class="sub_header svelte-1gogytf">Reading user input</div>
+        <div class="text svelte-1gogytf">I made the design decision of having all user input entered before the program is interpreted. 
+            <br class="svelte-1gogytf"><br class="svelte-1gogytf">
+            This meant that all input could be entered quickly on a single line
+        </div>
 
-            <div class="sub_header svelte-1bxmatr">Interpreting the program</div>
-            <div class="text svelte-1bxmatr">The program uses a while loop to keep running through the characters in the program 
-                until the end has been reached
-                <br class="svelte-1bxmatr"><br class="svelte-1bxmatr">
-                Inside the while loop a match statement is used to match the current 
-                operator to the current code to run for that operator
-            </div></div></div>
+        <div class="sub_header svelte-1gogytf">Interpreting the program</div>
+        <div class="text svelte-1gogytf">The program uses a while loop to keep running through the characters in the program 
+            until the end has been reached
+            <br class="svelte-1gogytf"><br class="svelte-1gogytf">
+            Inside the while loop a match statement is used to match the current 
+            operator to the current code to run for that operator
+        </div></div>
 </body>
 
 
-		<script type="module" data-sveltekit-hydrate="iupgex">
-			import { start } from "../_app/immutable/start-068caea8.js";
+		<script type="module" data-sveltekit-hydrate="dk9xq6">
+			import { start } from "../_app/immutable/start-655857da.js";
 
 			start({
 				env: {},
@@ -98,7 +98,7 @@
 					form: null
 				},
 				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="iupgex"]').parentNode,
+				target: document.querySelector('[data-sveltekit-hydrate="dk9xq6"]').parentNode,
 				trailing_slash: "never"
 			});
 		</script>
