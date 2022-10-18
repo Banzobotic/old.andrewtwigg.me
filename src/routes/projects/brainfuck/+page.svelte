@@ -76,67 +76,7 @@
 </body>
 
 <style>
-    ::-webkit-scrollbar {
-        width: 0.6vw;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #888;
-        border: 4px solid transparent;
-        border-radius: 0.3vw;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-
-    body {
-        background-color: #1f2125;
-        margin: 0;
-        overflow: overlay;
-    }
-
-    li {
-        margin: 1.2vh 0;
-    }
-
-    ul.no_dot {
-        list-style-type: none;
-    }
-
-    .content {
-        max-width: 45vw;
-        margin: 0 auto;
-        margin-top: 5vh;
-        margin-bottom: 10vh;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    }
-
-    .title {
-        color: #2dbecf;
-        font-size: 3.5vw;
-        margin-bottom: 4vh;
-    }
-
-
-    .header {
-        color: #2dbecf;
-        font-size: 2.4vw;
-        margin-bottom: 2vh;
-        margin-left: 2vw
-    }
-
-    .sub_header {
-        color: #2dbecf;
-        font-size: 1.5vw;
-        margin-bottom: 2vh;
-        margin-left: 2vw
-    }
-
-    .text {
-        color: white;
-        font-size: 1vw;
-        margin-bottom: 4vh;
-        margin-left: 2vw
-    }
+    @import "$lib/scrollbar.css";
+    @import "$lib/body.css";
+    @import "$lib/article.css";
 </style>

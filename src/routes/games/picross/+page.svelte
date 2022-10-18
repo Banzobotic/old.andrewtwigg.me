@@ -62,7 +62,7 @@
                                 <table style="margin: auto">
                                     {#each Array(5) as _, i}
                                         <tr><td style="color: white;">
-                                            <pre style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{grid.column_positions[x][4-i]}</pre>
+                                            <pre>{grid.column_positions[x][4-i]}</pre>
                                         </td></tr>
                                     {/each}
                                 </table>
@@ -74,7 +74,7 @@
                                 <table><tr>
                                     {#each Array(5) as _, i}
                                         <td style="color: white; padding: 5px; text-align: right;">
-                                            <pre style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{grid.row_positions[y][4-i]}</pre>
+                                            <pre>{grid.row_positions[y][4-i]}</pre>
                                         </td>
                                     {/each}
                                 </tr></table>
@@ -126,6 +126,11 @@
 
     .box-death {
         background-color: #bbb;
+    }
+
+    pre {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
     }
 </style>
 

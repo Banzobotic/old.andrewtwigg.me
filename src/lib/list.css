@@ -1,0 +1,35 @@
+.list {
+    margin: 0 auto;
+    margin-top: 6vh;
+    max-width: 40vw;
+}
+
+.item {
+    display: flex;
+    margin: 4vh 0;
+    text-decoration: none;
+}
+
+.info {
+    margin-left: 1vw
+}
+
+.name {
+    color: #2dbecf;
+    font-size: 3.5vw;
+}
+
+.description {
+    color: white;
+    font-size: 0.9vw;
+    margin-top: 1vh;
+}
+
+a.link {
+    color: #1c7fff;
+}
+
+img {
+    width: 12vw;
+    height: 12vw;
+}
