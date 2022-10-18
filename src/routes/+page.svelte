@@ -65,14 +65,13 @@
     .list {
         margin: 0 auto;
         margin-top: 4vh;
-        max-width: 50vw;
+        max-width: 40vw;
     }
 
     .item {
         display: flex;
         margin-bottom: 6vh;
         margin-top: 2vh;
-        margin-right: 10vw;
         text-decoration: none;
         border: purple;
         border-width: 5px;

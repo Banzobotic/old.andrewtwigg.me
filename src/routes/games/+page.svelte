@@ -51,13 +51,12 @@
     .list {
         margin: 0 auto;
         margin-top: 6vh;
-        max-width: 50vw;
+        max-width: 40vw;
     }
 
     .item {
         display: flex;
         margin: 4vh 0;
-        margin-right: 10vw;
         text-decoration: none;
     }
 
