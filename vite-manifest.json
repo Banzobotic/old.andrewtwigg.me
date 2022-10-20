@@ -1,11 +1,11 @@
 {
   "node_modules/@sveltejs/kit/src/runtime/client/start.js": {
-    "file": "_app/immutable/start-715c55d7.js",
+    "file": "_app/immutable/start-e1fc83bf.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/client/start.js",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_singletons-d232b27a.js"
+      "_singletons-21cf853d.js"
     ],
     "dynamicImports": [
       ".svelte-kit/generated/nodes/0.js",
@@ -19,7 +19,7 @@
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/layout.svelte": {
-    "file": "_app/immutable/components/layout.svelte-2e9e131c.js",
+    "file": "_app/immutable/components/layout.svelte-3cb32829.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/components/layout.svelte",
     "isEntry": true,
     "imports": [
@@ -27,84 +27,89 @@
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
-    "file": "_app/immutable/components/error.svelte-aa6a4aa6.js",
+    "file": "_app/immutable/components/error.svelte-b61baac3.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_singletons-d232b27a.js"
+      "_singletons-21cf853d.js"
     ]
   },
   "src/routes/+page.svelte": {
-    "file": "_app/immutable/components/pages/_page.svelte-4310c7b4.js",
+    "file": "_app/immutable/components/pages/_page.svelte-040ba9ba.js",
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_Navbar-d8336603.js"
+      "_Navbar-e41baf31.js",
+      "_units-a223cfbb.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-75c9b0cb.css"
+      "_app/immutable/assets/_page-c327d3c8.css"
     ]
   },
   "src/routes/about/+page.svelte": {
-    "file": "_app/immutable/components/pages/about/_page.svelte-b57670ff.js",
+    "file": "_app/immutable/components/pages/about/_page.svelte-b0caa9cf.js",
     "src": "src/routes/about/+page.svelte",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_Navbar-d8336603.js"
+      "_Navbar-e41baf31.js",
+      "_units-a223cfbb.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-41aa253d.css"
+      "_app/immutable/assets/_page-8bda2b5d.css"
     ]
   },
   "src/routes/games/+page.svelte": {
-    "file": "_app/immutable/components/pages/games/_page.svelte-91819c37.js",
+    "file": "_app/immutable/components/pages/games/_page.svelte-b2c5d640.js",
     "src": "src/routes/games/+page.svelte",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_Navbar-d8336603.js"
+      "_Navbar-e41baf31.js",
+      "_units-a223cfbb.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-e0580f11.css"
+      "_app/immutable/assets/_page-61ed2b9d.css"
     ]
   },
   "src/routes/games/picross/+page.svelte": {
-    "file": "_app/immutable/components/pages/games/picross/_page.svelte-50a9e030.js",
+    "file": "_app/immutable/components/pages/games/picross/_page.svelte-8d3ebe57.js",
     "src": "src/routes/games/picross/+page.svelte",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_Navbar-d8336603.js"
+      "_Navbar-e41baf31.js"
     ],
     "css": [
       "_app/immutable/assets/_page-9699a9c9.css"
     ]
   },
   "src/routes/projects/+page.svelte": {
-    "file": "_app/immutable/components/pages/projects/_page.svelte-04732c3e.js",
+    "file": "_app/immutable/components/pages/projects/_page.svelte-ca2deefc.js",
     "src": "src/routes/projects/+page.svelte",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_Navbar-d8336603.js"
+      "_Navbar-e41baf31.js",
+      "_units-a223cfbb.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-e0580f11.css"
+      "_app/immutable/assets/_page-61ed2b9d.css"
     ]
   },
   "src/routes/projects/brainfuck/+page.svelte": {
-    "file": "_app/immutable/components/pages/projects/brainfuck/_page.svelte-87c56a2a.js",
+    "file": "_app/immutable/components/pages/projects/brainfuck/_page.svelte-fa9ca3c1.js",
     "src": "src/routes/projects/brainfuck/+page.svelte",
     "isEntry": true,
     "imports": [
       "_index-13fba489.js",
-      "_Navbar-d8336603.js"
+      "_Navbar-e41baf31.js",
+      "_units-a223cfbb.js"
     ],
     "css": [
-      "_app/immutable/assets/_page-2fd99fb0.css"
+      "_app/immutable/assets/_page-7643dd97.css"
     ]
   },
   "src/routes/+layout.ts": {
@@ -115,8 +120,8 @@
       "__layout-1daba58d.js"
     ]
   },
-  "_singletons-d232b27a.js": {
-    "file": "_app/immutable/chunks/singletons-d232b27a.js",
+  "_singletons-21cf853d.js": {
+    "file": "_app/immutable/chunks/singletons-21cf853d.js",
     "imports": [
       "_index-13fba489.js"
     ]
@@ -127,17 +132,20 @@
   "__layout-1daba58d.js": {
     "file": "_app/immutable/chunks/_layout-1daba58d.js"
   },
-  "_Navbar-d8336603.js": {
-    "file": "_app/immutable/chunks/Navbar-d8336603.js",
+  "_Navbar-e41baf31.js": {
+    "file": "_app/immutable/chunks/Navbar-e41baf31.js",
     "imports": [
       "_index-13fba489.js"
     ],
     "css": [
-      "_app/immutable/assets/Navbar-6e56ae72.css"
+      "_app/immutable/assets/Navbar-2efb6626.css"
     ]
   },
+  "_units-a223cfbb.js": {
+    "file": "_app/immutable/chunks/units-a223cfbb.js"
+  },
   ".svelte-kit/generated/nodes/0.js": {
-    "file": "_app/immutable/chunks/0-29305a22.js",
+    "file": "_app/immutable/chunks/0-b9c51b44.js",
     "src": ".svelte-kit/generated/nodes/0.js",
     "isDynamicEntry": true,
     "imports": [
@@ -146,7 +154,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/1.js": {
-    "file": "_app/immutable/chunks/1-d8385baa.js",
+    "file": "_app/immutable/chunks/1-fbabc311.js",
     "src": ".svelte-kit/generated/nodes/1.js",
     "isDynamicEntry": true,
     "imports": [
@@ -154,7 +162,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/2.js": {
-    "file": "_app/immutable/chunks/2-3db9d552.js",
+    "file": "_app/immutable/chunks/2-da796747.js",
     "src": ".svelte-kit/generated/nodes/2.js",
     "isDynamicEntry": true,
     "imports": [
@@ -162,7 +170,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/3.js": {
-    "file": "_app/immutable/chunks/3-dcf74ce8.js",
+    "file": "_app/immutable/chunks/3-91104438.js",
     "src": ".svelte-kit/generated/nodes/3.js",
     "isDynamicEntry": true,
     "imports": [
@@ -170,7 +178,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/4.js": {
-    "file": "_app/immutable/chunks/4-91733e3d.js",
+    "file": "_app/immutable/chunks/4-7971f3f5.js",
     "src": ".svelte-kit/generated/nodes/4.js",
     "isDynamicEntry": true,
     "imports": [
@@ -178,7 +186,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/5.js": {
-    "file": "_app/immutable/chunks/5-ea5fece2.js",
+    "file": "_app/immutable/chunks/5-6bb723c0.js",
     "src": ".svelte-kit/generated/nodes/5.js",
     "isDynamicEntry": true,
     "imports": [
@@ -186,7 +194,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/6.js": {
-    "file": "_app/immutable/chunks/6-a6197e86.js",
+    "file": "_app/immutable/chunks/6-c2f73cae.js",
     "src": ".svelte-kit/generated/nodes/6.js",
     "isDynamicEntry": true,
     "imports": [
@@ -194,7 +202,7 @@
     ]
   },
   ".svelte-kit/generated/nodes/7.js": {
-    "file": "_app/immutable/chunks/7-8801bd7c.js",
+    "file": "_app/immutable/chunks/7-18f0d7c6.js",
     "src": ".svelte-kit/generated/nodes/7.js",
     "isDynamicEntry": true,
     "imports": [
@@ -202,27 +210,27 @@
     ]
   },
   "src/routes/+page.css": {
-    "file": "_app/immutable/assets/_page-75c9b0cb.css",
+    "file": "_app/immutable/assets/_page-c327d3c8.css",
     "src": "src/routes/+page.css"
   },
-  "Navbar.css": {
-    "file": "_app/immutable/assets/Navbar-6e56ae72.css",
-    "src": "Navbar.css"
-  },
   "src/routes/games/+page.css": {
-    "file": "_app/immutable/assets/_page-e0580f11.css",
+    "file": "_app/immutable/assets/_page-61ed2b9d.css",
     "src": "src/routes/games/+page.css"
   },
-  "src/routes/about/+page.css": {
-    "file": "_app/immutable/assets/_page-41aa253d.css",
-    "src": "src/routes/about/+page.css"
+  "src/routes/projects/brainfuck/+page.css": {
+    "file": "_app/immutable/assets/_page-7643dd97.css",
+    "src": "src/routes/projects/brainfuck/+page.css"
+  },
+  "Navbar.css": {
+    "file": "_app/immutable/assets/Navbar-2efb6626.css",
+    "src": "Navbar.css"
   },
   "src/routes/games/picross/+page.css": {
     "file": "_app/immutable/assets/_page-9699a9c9.css",
     "src": "src/routes/games/picross/+page.css"
   },
-  "src/routes/projects/brainfuck/+page.css": {
-    "file": "_app/immutable/assets/_page-2fd99fb0.css",
-    "src": "src/routes/projects/brainfuck/+page.css"
+  "src/routes/about/+page.css": {
+    "file": "_app/immutable/assets/_page-8bda2b5d.css",
+    "src": "src/routes/about/+page.css"
   }
 }
