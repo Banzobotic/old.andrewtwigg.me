@@ -1,5 +1,21 @@
 <script lang="ts">
     import Navbar from "./Navbar.svelte";
+    import { onMount } from 'svelte';
+    import { calculate_units } from '$lib/units';
+
+    let adjusted_width: number;
+
+    onMount(() => {
+        adjusted_width = calculate_units(window);
+
+        document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+
+        window.addEventListener('resize', () => {
+            adjusted_width = calculate_units(window);
+
+            document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+        })
+    });
 </script>
 
 <head>
@@ -12,7 +28,7 @@
     <div class="list">
         <div class="name">Latest Game</div>
         <a class="item" href="/games/picross">
-            <img src="/images/picross.png" alt="Picross Board">
+            <img class="item_image" src="/images/picross.png" alt="Picross Board">
             <div class="info">
                 <div class="name">Picross</div>
                 <div class="description">
@@ -27,7 +43,7 @@
 
         <div class="name">Latest Project</div>
         <a class="item" href="/projects/brainfuck">
-            <img src="/images/brainfuck/logo.png" alt="Brainfuck">
+            <img class="item_image" src="/images/brainfuck/logo.png" alt="Brainfuck">
             <div class="info">
                 <div class="name">BF Interpreter</div>
                 <div class="description">
@@ -46,12 +62,12 @@
     @import "$lib/list.css";
 
     .list {
-        margin-top: 4vh;
+        margin-top: 3vh;
     }
 
     .item {
         margin-top: 2vh;
-        margin-bottom: 6vh;
+        margin-bottom: 4vh;
         border: purple;
         border-width: 5px;
         border-style: solid;

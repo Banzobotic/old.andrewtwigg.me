@@ -1,7 +1,7 @@
 .list {
     margin: 0 auto;
     margin-top: 6vh;
-    max-width: 40vw;
+    max-width: 42rem;
 }
 
 .item {
@@ -11,25 +11,26 @@
 }
 
 .info {
-    margin-left: 1vw
+    margin-left: 1rem;
 }
 
 .name {
     color: #2dbecf;
-    font-size: 3.5vw;
+    font-size: 4rem;
 }
 
 .description {
     color: white;
-    font-size: 0.9vw;
-    margin-top: 1vh;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+    margin-left: 0.25rem;
 }
 
 a.link {
     color: #1c7fff;
 }
 
-img {
-    width: 12vw;
-    height: 12vw;
+.item_image {
+    width: 12.7rem;
+    height: 12.7rem;
 }

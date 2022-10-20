@@ -1,5 +1,21 @@
 <script lang="ts">
     import Navbar from "../Navbar.svelte";
+    import { onMount } from 'svelte';
+    import { calculate_units } from '$lib/units';
+
+    let adjusted_width: number;
+
+    onMount(() => {
+        adjusted_width = calculate_units(window);
+
+        document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+
+        window.addEventListener('resize', () => {
+            adjusted_width = calculate_units(window);
+
+            document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+        })
+    });
 </script>
 
 <head>
@@ -26,11 +42,11 @@
             <ul>
                 <li>2018:</li>
                 <ul>
-                    <li><a href="https://roboticschallenge.org.uk/">Tomorrow's Engineers Robotics Challenge</a> UK Champions</li>
+                    <li><a class="link" href="https://roboticschallenge.org.uk/">Tomorrow's Engineers Robotics Challenge</a> UK Champions</li>
                 </ul>
                 <li>2019:</li>
                 <ul>
-                    <li><a href="https://www.firstlegoleague.org/">First Lego League</a> (FLL) UK Finalists</li>
+                    <li><a class="link" href="https://www.firstlegoleague.org/">First Lego League</a> (FLL) UK Finalists</li>
                     <li>Network Rail Innovation Award Winners</li>
                 </ul>
                 <li>2020:</li>

@@ -7,7 +7,7 @@ ul.no_dot {
 }
 
 .content {
-    max-width: 45vw;
+    max-width: 45rem;
     margin: 0 auto;
     margin-top: 5vh;
     margin-bottom: 10vh;
@@ -15,25 +15,36 @@ ul.no_dot {
 
 .title {
     color: #2dbecf;
-    font-size: 3.5vw;
+    font-size: 3.5rem;
     margin-bottom: 4vh;
 }
 
 .header {
     color: #2dbecf;
-    font-size: 2.4vw;
+    font-size: 2.4rem;
+    margin-bottom: 2vh;
+    margin-left: 2vw
+}
+
+.sub_header {
+    color: #2dbecf;
+    font-size: 1.5rem;
     margin-bottom: 2vh;
     margin-left: 2vw
 }
 
 .text {
     color: white;
-    font-size: 1vw;
+    font-size: 1rem;
     margin-bottom: 7vh;
     margin-left: 2vw
 }
 
+a.link {
+    color: #1c7fff;
+}
+
 .video {
-    width: 35vw;
-    height: 19.6875vw;
+    width: 35rem;
+    height: 19.6875rem;
 }

@@ -1,11 +1,11 @@
 ::-webkit-scrollbar {
-    width: 0.6vw;
+    width: 0.6rem;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #888;
     border: 4px solid transparent;
-    border-radius: 0.3vw;
+    border-radius: 0.3rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {

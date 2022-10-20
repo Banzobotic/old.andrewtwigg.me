@@ -1,5 +1,23 @@
 <script lang="ts">
     import Navbar from "../Navbar.svelte";
+    import { onMount } from 'svelte';
+    import { calculate_units } from '$lib/units';
+
+    let adjusted_width: number;
+
+    onMount(() => {
+        adjusted_width = calculate_units(window);
+
+        document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+
+        window.addEventListener('resize', () => {
+            adjusted_width = calculate_units(window);
+
+            document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+        })
+    });
+
+    
 </script>
 
 <head>
@@ -11,7 +29,7 @@
     
     <div class="list">
         <a class="item" href="/games/picross">
-            <img src="/images/picross.png" alt="Picross Board">
+            <img class="item_image" src="/images/picross.png" alt="Picross Board">
             <div class="info">
                 <div class="name">Picross</div>
                 <div class="description">

@@ -1,5 +1,21 @@
 <script lang="ts">
     import Navbar from "../Navbar.svelte";
+    import { onMount } from 'svelte';
+    import { calculate_units } from '$lib/units';
+
+    let adjusted_width: number;
+
+    onMount(() => {
+        adjusted_width = calculate_units(window);
+
+        document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+
+        window.addEventListener('resize', () => {
+            adjusted_width = calculate_units(window);
+
+            document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+        })
+    });
 </script>
 
 <head>
@@ -11,7 +27,7 @@
 
     <div class="list">
         <a class="item" href="/projects/brainfuck">
-            <img src="/images/brainfuck/logo.png" alt="Brainfuck">
+            <img class="item_image" src="/images/brainfuck/logo.png" alt="Brainfuck">
             <div class="info">
                 <div class="name">BF Interpreter</div>
                 <div class="description">

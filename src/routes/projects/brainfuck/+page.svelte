@@ -1,5 +1,21 @@
 <script lang="ts">
     import Navbar from "../../Navbar.svelte";
+    import { onMount } from 'svelte';
+    import { calculate_units } from '$lib/units';
+
+    let adjusted_width: number;
+
+    onMount(() => {
+        adjusted_width = calculate_units(window);
+
+        document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+
+        window.addEventListener('resize', () => {
+            adjusted_width = calculate_units(window);
+
+            document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+        })
+    });
 </script>
 
 <head>
@@ -54,7 +70,7 @@
             For every line of user input the program will iterate through all the characters 
             and filter out any that aren't one of the 8 operators
             <br><br>
-            <img style="width: 25vw" src="/images/brainfuck/iterator.png" alt="Rust code showing iterator I used">
+            <img style="width: 25rem;" src="/images/brainfuck/iterator.png" alt="Rust code showing iterator I used">
         </div>
 
         <div class="sub_header">Reading user input</div>
