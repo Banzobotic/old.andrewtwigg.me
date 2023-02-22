@@ -58,7 +58,7 @@
                         {#if x == 0}
                             <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px"></td>
                         {:else}
-                            <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px">
+                            <td style="padding: 0; border: 1px solid #ccc; border-top:0px">
                                 <table style="margin: auto">
                                     {#each Array(5) as _, i}
                                         <tr><td style="color: white;">
@@ -70,7 +70,7 @@
                         {/if}
                     {:else}
                         {#if x == 0}
-                            <td style="padding: 0; border: 1px solid #ccc; border-left: 0px; border-top:0px">
+                            <td style="padding: 0; border: 1px solid #ccc; border-left: 0px;">
                                 <table><tr>
                                     {#each Array(5) as _, i}
                                         <td style="color: white; padding: 5px; text-align: right;">

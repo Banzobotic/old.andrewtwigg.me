@@ -55,6 +55,7 @@
 
     .mobile_navbar_wrapper {
         background-color: black;
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 
     .mobile_nav_options {
