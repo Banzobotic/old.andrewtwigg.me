@@ -15,7 +15,7 @@ class Snake {
     private draw_list: Array<BodySegment>;
 
     constructor() {
-        this.snake = [new Cell(3, 7), new Cell(4, 7), new Cell(5, 7), new Cell(5, 6), new Cell(5, 5), new Cell(4, 5), new Cell(3, 5), new Cell(3, 4)];
+        this.snake = [new Cell(3, 7), new Cell(4, 7), new Cell(5, 7), new Cell(5, 6), new Cell(5, 5), new Cell(4, 5), new Cell(3, 5), new Cell(3, 6)];
         this.moving = false;
         this.food = new Cell(10, 7);
         this.draw_list = [];
@@ -55,7 +55,7 @@ class Snake {
             if (prev_direction == current_direction) {
                 length += 1;
             } else {
-                draw_list.push(new BodySegment(start_segment, length, current_direction));
+                draw_list.push(new BodySegment(start_segment, length, prev_direction));
                 length = 2;
                 start_segment = prev_segment;
             }
@@ -67,6 +67,17 @@ class Snake {
         draw_list.push(new BodySegment(start_segment, length, current_direction)) 
         this.draw_list = draw_list;
         console.log(draw_list);
+    }
+
+    draw_lines() {
+        let current_line = this.draw_list[0];
+        for (let i = 0; i < this.draw_list.length; i++) {
+            current_line = this.draw_list[i];
+
+            let box: HTMLElement = document.getElementById(`${current_line.start.x}_${current_line.start.y}`);
+
+            box.appendChild()
+        }
     }
 
     is_segment(x: number, y: number) {

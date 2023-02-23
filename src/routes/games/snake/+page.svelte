@@ -17,12 +17,12 @@
 <body>
     <Navbar/>
 
-    <div style="display: flex;">
+    <div>
         <table class="grid">
             {#each Array(grid_size) as _, y}
                 <tr>
                     {#each Array(grid_size) as _, x}
-                        <td class="box-border">
+                        <td id="{x}_{y}" class="box-border">
                             <div class="box"></div>
                             <!-- <div style="visibility: {snake.is_segment(x, y)}" class="segment"></div>
                             <div style="visibility: {snake.is_head(x, y)}" class="head">
