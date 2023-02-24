@@ -1,9 +1,26 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+    import { calculate_units } from "$lib/units";
+
     import Navbar from "../../Navbar.svelte";
 
     import { CellType, CellStatus } from "./cell"  ;
     import { Grid } from "./grid";
     import { ID } from "./id";
+
+    let adjusted_width: number;
+
+    onMount(() => {
+        adjusted_width = calculate_units(window);
+
+        document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+
+        window.addEventListener('resize', () => {
+            adjusted_width = calculate_units(window);
+
+            document.getElementsByTagName("html")[0].style.fontSize = `${adjusted_width}vw`
+        })
+    });
 
     enum Click {
         left = 1,
