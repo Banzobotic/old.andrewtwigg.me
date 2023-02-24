@@ -17,46 +17,45 @@ enum TurnDir {
     Mirror,
 }
 
-function get_turn_dir(new_direction: Direction, old_direction: Direction): TurnDir {
-    if (new_direction == old_direction) {
+function get_turn_dir(direction: Direction, prev_direction: Direction): TurnDir {
+    if (direction == prev_direction) {
         return TurnDir.Straight
-    } else if (new_direction == (old_direction + 1) % 3) {
+    } else if (direction == mod(prev_direction + 1, 4)) {
         return TurnDir.Clockwise
-    } else if (new_direction == (old_direction - 1) % 3) {
+    } else if (direction == mod(prev_direction - 1, 4)) {
         return TurnDir.AntiClockwise
     } else {
         return TurnDir.Mirror
     }
 }
 
+function mod(n: number, m: number) {
+    return ((n % m) + m) % m;
+  }
+
 class Snake {
     private snake: Array<Cell>;
     private moving: boolean;
+    private direction: Direction;
     private food: Cell;
     private draw_list: Array<BodySegment>;
     private document: Document | null;
     public window: Window | null;
     private ctx: CanvasRenderingContext2D | null;
-    private last_tick_start: number;
+    private last_tick_start: number | null;
+    private last_move: number | null;
 
     constructor() {
-        this.snake = [new Cell(3, 7), new Cell(4, 7), new Cell(5, 7), new Cell(5, 6), new Cell(5, 5), new Cell(4, 5), new Cell(3, 5), new Cell(3, 6)];
+        this.snake = [new Cell(3, 7), new Cell(4, 7), new Cell(5, 7), new Cell(5, 6), new Cell(5, 5), new Cell(5, 4), new Cell(4, 4), new Cell(3, 4), new Cell(3, 5), new Cell(2, 5), new Cell(1, 5), new Cell(1, 4), new Cell(1, 3), new Cell(1, 2)];
         this.moving = false;
+        this.direction = Direction.Right;
         this.food = new Cell(10, 7);
         this.draw_list = [];
         this.document = null;
         this.window = null;
         this.ctx = null;
-        this.last_tick_start = 0;
-    }
-
-    start() {
-        this.moving = true;
-        this.move();
-    }
-
-    move() {
-
+        this.last_tick_start = null;
+        this.last_move = null;
     }
 
     set_document_and_window(document: Document, window: Window) {
@@ -86,16 +85,44 @@ class Snake {
             console.error("Window not instantiated before game loop started")
             return;
         }
+        if (this.last_tick_start == null || this.last_move == null) {
+            this.last_tick_start = timestamp;
+            this.last_move = timestamp;
+        }
 
         let tick_time = timestamp - this.last_tick_start;
+        let time_since_last_move = timestamp - this.last_move;
         this.last_tick_start = timestamp;
 
+        if (time_since_last_move > 500) {
+            this.move();
+            this.last_move = timestamp;
+        }
+        
         this.render();
 
         let snake = this;
         window.requestAnimationFrame(function(timestamp) {
             snake.game_loop(timestamp)
         })
+    }
+
+    move() {
+        let new_head: Cell;
+        let current_head = this.snake[this.snake.length - 1];
+
+        if (this.direction == Direction.Right) {
+            new_head = new Cell(current_head.x + 1, current_head.y);
+        } else if (this.direction == Direction.Left) {
+            new_head = new Cell(current_head.x - 1, current_head.y);
+        } else if (this.direction == Direction.Down) {
+            new_head = new Cell(current_head.x, current_head.y + 1);
+        } else {
+            new_head = new Cell(current_head.x, current_head.y - 1);
+        }
+
+        this.snake.push(new_head);
+        this.snake.shift();
     }
 
     render() {
@@ -224,48 +251,128 @@ class Snake {
             x_position = current_segment.x * BOX_SIZE;
             y_position = current_segment.y * BOX_SIZE;
         } else if (direction == Direction.Down) {
-            x_position = current_segment.x * (BOX_SIZE + 1);
+            x_position = (current_segment.x + 1) * BOX_SIZE;
             y_position = current_segment.y * BOX_SIZE;
         } else if (direction == Direction.Up) {
             x_position = current_segment.x * BOX_SIZE;
-            y_position = current_segment.y * (BOX_SIZE + 1);
+            y_position = (current_segment.y + 1) * BOX_SIZE;
         } else {
-            x_position = current_segment.x * (BOX_SIZE + 1);
-            y_position = current_segment.y * (BOX_SIZE + 1);
+            x_position = (current_segment.x + 1) * BOX_SIZE;
+            y_position = (current_segment.y + 1) * BOX_SIZE;
         }
         snake.moveTo(x_position, y_position);
+        this.ctx.beginPath();
+        this.ctx.moveTo(x_position, y_position);
 
-        for (let i = 0; i < this.snake.length; i++) {
+        let top_edge: boolean = true;
+
+        let i = 0;
+
+        while (true) {
             current_segment = this.snake[i];
             prev_direction = direction;
-            if (i != this.snake.length - 1) {
+            if (top_edge) {
                 direction = snake_direction(this.snake[i+1], current_segment);
+            } else {
+                direction = snake_direction(this.snake[i-1], current_segment);
             }
 
             let turn_dir = get_turn_dir(direction, prev_direction);
+
+            console.log(`current_segment: (${current_segment.x}, ${current_segment.y})\ndirection: ${direction}\nprev_direction: ${prev_direction}\nturn_dir: ${turn_dir}\ntop_edge: ${top_edge}`)
             
             if (turn_dir == TurnDir.Straight) {
                 if (direction == Direction.Right) {
-                    x_position += 35;
+                    x_position += BOX_SIZE;
                 } else if (direction == Direction.Left) {
-                    x_position -= 35;
+                    x_position -= BOX_SIZE;
                 } else if (direction == Direction.Down) {
-                    y_position += 35;
+                    y_position += BOX_SIZE;
                 } else {
-                    y_position -= 35;
+                    y_position -= BOX_SIZE;
                 }
                 snake.lineTo(x_position, y_position);
-                console.log(x_position, y_position);
+                this.ctx.lineTo(x_position, y_position);
             } else if (turn_dir == TurnDir.Clockwise) {
-                
-            } else {
+                if (prev_direction == Direction.Right) {
+                    x_position += BOX_SIZE;
+                } else if (prev_direction == Direction.Left) {
+                    x_position -= BOX_SIZE;
+                } else if (prev_direction == Direction.Down) {
+                    y_position += BOX_SIZE;
+                } else {
+                    y_position -= BOX_SIZE;
+                }
+                snake.lineTo(x_position, y_position);
+                this.ctx.lineTo(x_position, y_position);
 
+                if (direction == Direction.Right) {
+                    x_position += BOX_SIZE;
+                } else if (direction == Direction.Left) {
+                    x_position -= BOX_SIZE;
+                } else if (direction == Direction.Down) {
+                    y_position += BOX_SIZE;
+                } else {
+                    y_position -= BOX_SIZE;
+                }
+                snake.lineTo(x_position, y_position);
+                this.ctx.lineTo(x_position, y_position);
+            } 
+
+            if (top_edge) {
+                if (i == this.snake.length - 2) {
+                    top_edge = false;
+                    
+                    for (let j = 0; j <= 2; j++) {
+                        let shift_dir = mod(direction + j, 4);
+
+                        if (shift_dir == Direction.Right) {
+                            x_position += BOX_SIZE;
+                        } else if (shift_dir == Direction.Left) {
+                            x_position -= BOX_SIZE;
+                        } else if (shift_dir == Direction.Down) {
+                            y_position += BOX_SIZE;
+                        } else {
+                            y_position -= BOX_SIZE;
+                        }
+                        snake.lineTo(x_position, y_position);
+                        this.ctx.lineTo(x_position, y_position);
+                    }
+
+                    direction = (direction + 2) % 4;
+                } else {
+                    i += 1;
+                }
+            } else {
+                i -= 1;
+                if (i == 0) {
+                    for (let j = 0; j <= 1; j++) {
+                        let shift_dir = mod(direction + j, 4);
+
+                        if (shift_dir == Direction.Right) {
+                            x_position += BOX_SIZE;
+                        } else if (shift_dir == Direction.Left) {
+                            x_position -= BOX_SIZE;
+                        } else if (shift_dir == Direction.Down) {
+                            y_position += BOX_SIZE;
+                        } else {
+                            y_position -= BOX_SIZE;
+                        }
+                        snake.lineTo(x_position, y_position);
+                        this.ctx.lineTo(x_position, y_position);
+                    }
+
+                    break;
+                }
             }
         }
 
         snake.closePath();
         this.ctx.fillStyle = "blue";
         this.ctx.fill(snake);
+        // this.ctx.strokeStyle = "red";
+        // this.ctx.lineWidth = 10;
+        // this.ctx.stroke();
     }
 }
 
