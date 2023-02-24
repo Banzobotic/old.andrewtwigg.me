@@ -1,12 +1,33 @@
 export { Snake };
 
+const GRID_SIZE = 15;
+const BOX_SIZE = 35;
+
 enum Direction {
     Up,
+    Right,
     Down,
     Left,
-    Right,
 }
 
+enum TurnDir {
+    Clockwise,
+    AntiClockwise,
+    Straight,
+    Mirror,
+}
+
+function get_turn_dir(new_direction: Direction, old_direction: Direction): TurnDir {
+    if (new_direction == old_direction) {
+        return TurnDir.Straight
+    } else if (new_direction == (old_direction + 1) % 3) {
+        return TurnDir.Clockwise
+    } else if (new_direction == (old_direction - 1) % 3) {
+        return TurnDir.AntiClockwise
+    } else {
+        return TurnDir.Mirror
+    }
+}
 
 class Snake {
     private snake: Array<Cell>;
@@ -83,9 +104,9 @@ class Snake {
             return;
         }
 
-        this.ctx.clearRect(0, 0, 525, 525);
-        this.draw_background()
-        this.draw_snake()
+        this.ctx.clearRect(0, 0, GRID_SIZE * BOX_SIZE, GRID_SIZE * BOX_SIZE);
+        this.draw_background();
+        this.draw_snake();
     }
 
     create_draw_list() {
@@ -154,15 +175,15 @@ class Snake {
             return;
         }
 
-        pattern_canvas.width = 70;
-        pattern_canvas.height = 70;
+        pattern_canvas.width = BOX_SIZE * 2;
+        pattern_canvas.height = BOX_SIZE * 2;
 
         pattern_ctx.fillStyle = "#3eed52";
-        pattern_ctx.fillRect(0, 0, 35, 35);
-        pattern_ctx.fillRect(35, 35, 35, 35);
+        pattern_ctx.fillRect(0, 0, BOX_SIZE, BOX_SIZE);
+        pattern_ctx.fillRect(BOX_SIZE, BOX_SIZE, BOX_SIZE, BOX_SIZE);
         pattern_ctx.fillStyle = "#31b540";
-        pattern_ctx.fillRect(35, 0, 35, 35);
-        pattern_ctx.fillRect(0,35, 35, 35);
+        pattern_ctx.fillRect(BOX_SIZE, 0, BOX_SIZE, BOX_SIZE);
+        pattern_ctx.fillRect(0,BOX_SIZE, BOX_SIZE, BOX_SIZE);
 
         const pattern = this.ctx.createPattern(pattern_canvas, "repeat");
         
@@ -171,17 +192,80 @@ class Snake {
         }
 
         this.ctx.fillStyle = pattern;
-        this.ctx.fillRect(0, 0, 525, 525)
+        this.ctx.fillRect(0, 0, GRID_SIZE * BOX_SIZE, GRID_SIZE * BOX_SIZE)
     }
 
     draw_snake() {
+        function snake_direction(new_segment: Cell, prev_segment: Cell): Direction {
+            if (new_segment.x - prev_segment.x > 0) {
+                return Direction.Right;
+            } else if (new_segment.x - prev_segment.x < 0) {
+                return Direction.Left;
+            } else if (new_segment.y - prev_segment.y > 0) {
+                return Direction.Down;
+            } else {
+                return Direction.Up;
+            }
+        }
+
         if (this.ctx == null) {
             console.error("Snake drawn before canvas context instantiated");
             return;
         }
 
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.snake[0].x * 25, this.snake[0].y * 25);
+        let snake = new Path2D();
+        let current_segment = this.snake[0];
+        let direction = snake_direction(this.snake[1], current_segment);
+        let prev_direction: Direction;
+        let x_position = 0;
+        let y_position = 0;
+
+        if (direction == Direction.Right) {
+            x_position = current_segment.x * BOX_SIZE;
+            y_position = current_segment.y * BOX_SIZE;
+        } else if (direction == Direction.Down) {
+            x_position = current_segment.x * (BOX_SIZE + 1);
+            y_position = current_segment.y * BOX_SIZE;
+        } else if (direction == Direction.Up) {
+            x_position = current_segment.x * BOX_SIZE;
+            y_position = current_segment.y * (BOX_SIZE + 1);
+        } else {
+            x_position = current_segment.x * (BOX_SIZE + 1);
+            y_position = current_segment.y * (BOX_SIZE + 1);
+        }
+        snake.moveTo(x_position, y_position);
+
+        for (let i = 0; i < this.snake.length; i++) {
+            current_segment = this.snake[i];
+            prev_direction = direction;
+            if (i != this.snake.length - 1) {
+                direction = snake_direction(this.snake[i+1], current_segment);
+            }
+
+            let turn_dir = get_turn_dir(direction, prev_direction);
+            
+            if (turn_dir == TurnDir.Straight) {
+                if (direction == Direction.Right) {
+                    x_position += 35;
+                } else if (direction == Direction.Left) {
+                    x_position -= 35;
+                } else if (direction == Direction.Down) {
+                    y_position += 35;
+                } else {
+                    y_position -= 35;
+                }
+                snake.lineTo(x_position, y_position);
+                console.log(x_position, y_position);
+            } else if (turn_dir == TurnDir.Clockwise) {
+                
+            } else {
+
+            }
+        }
+
+        snake.closePath();
+        this.ctx.fillStyle = "blue";
+        this.ctx.fill(snake);
     }
 }
 
