@@ -11,8 +11,6 @@
 
     let snake = new Snake;
 
-    snake.create_draw_list();
-
     if (browser) {
         adjusted_width = calculate_units(window);
 

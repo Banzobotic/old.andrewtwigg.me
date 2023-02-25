@@ -1,13 +1,15 @@
+import chroma from "chroma-js";
+
 export { Snake };
 
 const GRID_SIZE = 15;
 const BOX_SIZE = 35;
 
 enum Direction {
-    Up,
     Right,
     Down,
     Left,
+    Up,
 }
 
 enum TurnDir {
@@ -46,7 +48,7 @@ class Snake {
     private last_move: number | null;
 
     constructor() {
-        this.snake = [new Cell(3, 7), new Cell(4, 7), new Cell(5, 7), new Cell(5, 6), new Cell(5, 5), new Cell(5, 4), new Cell(4, 4), new Cell(3, 4), new Cell(3, 5), new Cell(2, 5), new Cell(1, 5), new Cell(1, 4), new Cell(1, 3), new Cell(1, 2)];
+        this.snake = [new Cell(4, 8), new Cell(3, 8), new Cell(3, 7), new Cell(4, 7), new Cell(5, 7), new Cell(5, 6), new Cell(5, 5), new Cell(5, 4), new Cell(4, 4), new Cell(3, 4), new Cell(3, 5), new Cell(2, 5), new Cell(1, 5), new Cell(1, 4), new Cell(1, 3), new Cell(1, 2), new Cell(2, 2), new Cell(2, 3), new Cell(3, 3)];
         this.moving = false;
         this.direction = Direction.Right;
         this.food = new Cell(10, 7);
@@ -94,10 +96,10 @@ class Snake {
         let time_since_last_move = timestamp - this.last_move;
         this.last_tick_start = timestamp;
 
-        if (time_since_last_move > 500) {
-            this.move();
-            this.last_move = timestamp;
-        }
+        // if (time_since_last_move > 500) {
+        //     this.move();
+        //     this.last_move = timestamp;
+        // }
         
         this.render();
 
@@ -134,55 +136,6 @@ class Snake {
         this.ctx.clearRect(0, 0, GRID_SIZE * BOX_SIZE, GRID_SIZE * BOX_SIZE);
         this.draw_background();
         this.draw_snake();
-    }
-
-    create_draw_list() {
-        let draw_list: Array<BodySegment> = [];
-        let length = 1;
-        let prev_direction = Direction.Right;
-        let current_direction: Direction = Direction.Right;
-        let prev_segment: Cell = this.snake[0];
-        let current_segment: Cell;
-        let start_segment: Cell = prev_segment; 
-
-        for (let i = 1; i < this.snake.length; i++) {
-            current_segment = this.snake[i];
-
-            if (current_segment.x - prev_segment.x > 0) {
-                current_direction = Direction.Right;
-            } else if (current_segment.x - prev_segment.x < 0) {
-                current_direction = Direction.Left;
-            } else if (current_segment.y - prev_segment.y > 0) {
-                current_direction = Direction.Down;
-            } else {
-                current_direction = Direction.Up;
-            }
-
-            if (prev_direction == current_direction) {
-                length += 1;
-            } else {
-                if (prev_direction == Direction.Right || prev_direction == Direction.Down) {
-                    draw_list.push(new BodySegment(start_segment, length, prev_direction));
-                } else {
-                    draw_list.push(new BodySegment(prev_segment, length, prev_direction));
-                }
-                
-                length = 2;
-                start_segment = prev_segment;
-            }
-
-            prev_direction = current_direction;
-            prev_segment = current_segment;
-        }
-
-        if (prev_direction == Direction.Right || prev_direction == Direction.Down) {
-            draw_list.push(new BodySegment(start_segment, length, prev_direction));
-        } else {
-            draw_list.push(new BodySegment(prev_segment, length, prev_direction));
-        }
-
-        this.draw_list = draw_list;
-        console.log(draw_list);
     }
 
     draw_background() {
@@ -222,13 +175,16 @@ class Snake {
         this.ctx.fillRect(0, 0, GRID_SIZE * BOX_SIZE, GRID_SIZE * BOX_SIZE)
     }
 
+    // Still to do: rounded ends, decrease slope when certain length reached and only use part of the gradient until certain length reached
+    // Also need to use contants for easier modification of values
+    // Eventually will need to update to be able to handle smooth movement
     draw_snake() {
-        function snake_direction(new_segment: Cell, prev_segment: Cell): Direction {
-            if (new_segment.x - prev_segment.x > 0) {
+        function snake_direction(current_segment: Cell, prev_segment: Cell): Direction {
+            if (current_segment.x - prev_segment.x > 0) {
                 return Direction.Right;
-            } else if (new_segment.x - prev_segment.x < 0) {
+            } else if (current_segment.x - prev_segment.x < 0) {
                 return Direction.Left;
-            } else if (new_segment.y - prev_segment.y > 0) {
+            } else if (current_segment.y - prev_segment.y > 0) {
                 return Direction.Down;
             } else {
                 return Direction.Up;
@@ -236,143 +192,157 @@ class Snake {
         }
 
         if (this.ctx == null) {
-            console.error("Snake drawn before canvas context instantiated");
+            console.error("draw_snake called before canvas context instantiated");
             return;
         }
 
-        let snake = new Path2D();
-        let current_segment = this.snake[0];
-        let direction = snake_direction(this.snake[1], current_segment);
-        let prev_direction: Direction;
-        let x_position = 0;
-        let y_position = 0;
+        this.ctx.lineWidth = 27;
+        this.ctx.lineCap = "round";
+        this.ctx.lineJoin = "round";
 
-        if (direction == Direction.Right) {
-            x_position = current_segment.x * BOX_SIZE;
-            y_position = current_segment.y * BOX_SIZE;
-        } else if (direction == Direction.Down) {
-            x_position = (current_segment.x + 1) * BOX_SIZE;
-            y_position = current_segment.y * BOX_SIZE;
-        } else if (direction == Direction.Up) {
-            x_position = current_segment.x * BOX_SIZE;
-            y_position = (current_segment.y + 1) * BOX_SIZE;
-        } else {
-            x_position = (current_segment.x + 1) * BOX_SIZE;
-            y_position = (current_segment.y + 1) * BOX_SIZE;
-        }
-        snake.moveTo(x_position, y_position);
-        this.ctx.beginPath();
-        this.ctx.moveTo(x_position, y_position);
+        let direction = snake_direction(this.snake[1], this.snake[0]);
+        let prev_direction = direction;
 
-        let top_edge: boolean = true;
+        let start: Cell;
+        let end: Cell;
+        "#1f87d1"
+        "#0644af"
 
-        let i = 0;
+        let start_colour = "#670a58";
+        let end_colour = "#0644af";
 
-        while (true) {
-            current_segment = this.snake[i];
+        let scale = chroma.scale(["#670a58", "#0644af"]).mode("lch");
+
+        for (let i = 0; i < this.snake.length; i++) {
             prev_direction = direction;
-            if (top_edge) {
-                direction = snake_direction(this.snake[i+1], current_segment);
-            } else {
-                direction = snake_direction(this.snake[i-1], current_segment);
+            if (i != this.snake.length - 1) {
+                direction = snake_direction(this.snake[i+1], this.snake[i]);
             }
 
-            let turn_dir = get_turn_dir(direction, prev_direction);
+            let turn = get_turn_dir(direction, prev_direction);
 
-            console.log(`current_segment: (${current_segment.x}, ${current_segment.y})\ndirection: ${direction}\nprev_direction: ${prev_direction}\nturn_dir: ${turn_dir}\ntop_edge: ${top_edge}`)
-            
-            if (turn_dir == TurnDir.Straight) {
-                if (direction == Direction.Right) {
-                    x_position += BOX_SIZE;
-                } else if (direction == Direction.Left) {
-                    x_position -= BOX_SIZE;
-                } else if (direction == Direction.Down) {
-                    y_position += BOX_SIZE;
-                } else {
-                    y_position -= BOX_SIZE;
-                }
-                snake.lineTo(x_position, y_position);
-                this.ctx.lineTo(x_position, y_position);
-            } else if (turn_dir == TurnDir.Clockwise) {
-                if (prev_direction == Direction.Right) {
-                    x_position += BOX_SIZE;
-                } else if (prev_direction == Direction.Left) {
-                    x_position -= BOX_SIZE;
-                } else if (prev_direction == Direction.Down) {
-                    y_position += BOX_SIZE;
-                } else {
-                    y_position -= BOX_SIZE;
-                }
-                snake.lineTo(x_position, y_position);
-                this.ctx.lineTo(x_position, y_position);
+            if (turn == TurnDir.Straight) {
+                let segment_x = this.snake[i].x * 35;
+                let segment_y = this.snake[i].y * 35;
 
-                if (direction == Direction.Right) {
-                    x_position += BOX_SIZE;
-                } else if (direction == Direction.Left) {
-                    x_position -= BOX_SIZE;
-                } else if (direction == Direction.Down) {
-                    y_position += BOX_SIZE;
-                } else {
-                    y_position -= BOX_SIZE;
-                }
-                snake.lineTo(x_position, y_position);
-                this.ctx.lineTo(x_position, y_position);
-            } 
+                let segment = new Path2D();
 
-            if (top_edge) {
-                if (i == this.snake.length - 2) {
-                    top_edge = false;
-                    
-                    for (let j = 0; j <= 2; j++) {
-                        let shift_dir = mod(direction + j, 4);
+                let gradient = this.ctx.createLinearGradient(
+                    segment_x, 
+                    segment_y + 17.5, 
+                    segment_x + 35, 
+                    segment_y + 17.5,
+                );
+                
+                gradient.addColorStop(0, scale(i / this.snake.length).hex());
+                gradient.addColorStop(1, scale((i + 1) / this.snake.length).hex());
 
-                        if (shift_dir == Direction.Right) {
-                            x_position += BOX_SIZE;
-                        } else if (shift_dir == Direction.Left) {
-                            x_position -= BOX_SIZE;
-                        } else if (shift_dir == Direction.Down) {
-                            y_position += BOX_SIZE;
-                        } else {
-                            y_position -= BOX_SIZE;
-                        }
-                        snake.lineTo(x_position, y_position);
-                        this.ctx.lineTo(x_position, y_position);
-                    }
+                segment.moveTo(segment_x, segment_y + (4 + (this.snake.length / 2 - i / 2)));
+                segment.lineTo(segment_x, segment_y + 35 - (4 + (this.snake.length / 2 - i / 2)));
+                segment.lineTo(segment_x + 35, segment_y + 35 - (4 + (this.snake.length / 2 - i / 2 - 0.5)));
+                segment.lineTo(segment_x + 35, segment_y + (4 + (this.snake.length / 2 - i / 2 - 0.5)));
+                
+                segment.closePath();
 
-                    direction = (direction + 2) % 4;
-                } else {
-                    i += 1;
-                }
+                this.ctx.translate(segment_x + 17.5, segment_y + 17.5);
+                this.ctx.rotate((Math.PI / 2) * direction);
+                this.ctx.translate(-segment_x - 17.5, -segment_y - 17.5);
+                
+                this.ctx.fillStyle = gradient;
+                this.ctx.fill(segment);
+
+                this.ctx.resetTransform();
+            } else if (turn == TurnDir.Clockwise) {
+                let segment_x = this.snake[i].x * 35;
+                let segment_y = this.snake[i].y * 35;
+
+                let segment = new Path2D();
+
+                let gradient = this.ctx.createLinearGradient(
+                    segment_x + 17.5, 
+                    segment_y + 35, 
+                    segment_x + 35, 
+                    segment_y + 17.5,
+                );
+
+                gradient.addColorStop(0, scale(i / this.snake.length).hex());
+                gradient.addColorStop(1, scale((i + 1) / this.snake.length).hex());
+
+                segment.moveTo(segment_x + (4 + (this.snake.length / 2 - i / 2)), segment_y + 35);
+                segment.quadraticCurveTo(
+                    segment_x + (4 + (this.snake.length / 2 - i / 2 - 0.5)), 
+                    segment_y + (4 + (this.snake.length / 2 - i / 2 - 0.5)),
+                    segment_x + 35,
+                    segment_y + (4 + (this.snake.length / 2 - i / 2 - 0.5))
+                )
+                segment.lineTo(segment_x + 35, segment_y + 35 - (4 + (this.snake.length / 2 - i / 2 - 0.5)));
+                segment.quadraticCurveTo(
+                    segment_x + 35 - (4 + (this.snake.length / 2 - i / 2)),
+                    segment_y + 35 - (4 + (this.snake.length / 2 - i / 2)),
+                    segment_x + 35 - (4 + (this.snake.length / 2 - i / 2)),
+                    segment_y + 35
+                )
+                
+                segment.closePath();
+
+                this.ctx.translate(segment_x + 17.5, segment_y + 17.5);
+
+                this.ctx.rotate((Math.PI / 2) * direction);
+
+                this.ctx.translate(-segment_x - 17.5, -segment_y - 17.5);
+                
+                this.ctx.fillStyle = gradient;
+                this.ctx.fill(segment);
+
+                this.ctx.resetTransform();
+            } else if (turn == TurnDir.AntiClockwise) {
+                let segment_x = this.snake[i].x * 35;
+                let segment_y = this.snake[i].y * 35;
+
+                let segment = new Path2D();
+
+                let gradient = this.ctx.createLinearGradient(
+                    segment_x + 17.5, 
+                    segment_y, 
+                    segment_x + 35, 
+                    segment_y + 17.5,
+                );
+
+                gradient.addColorStop(0, scale(i / this.snake.length).hex());
+                gradient.addColorStop(1, scale((i + 1) / this.snake.length).hex());
+
+                segment.moveTo(segment_x + (4 + (this.snake.length / 2 - i / 2)), segment_y);
+                segment.quadraticCurveTo(
+                    segment_x + (4 + (this.snake.length / 2 - i / 2 - 0.5)), 
+                    segment_y + 35 - (4 + (this.snake.length / 2 - i / 2 - 0.5)),
+                    segment_x + 35,
+                    segment_y + 35 - (4 + (this.snake.length / 2 - i / 2 - 0.5))
+                );
+                segment.lineTo(segment_x + 35, segment_y + (4 + (this.snake.length / 2 - i / 2 - 0.5)));
+                segment.quadraticCurveTo(
+                    segment_x + 35 - (4 + (this.snake.length / 2 - i / 2)),
+                    segment_y + (4 + (this.snake.length / 2 - i / 2)),
+                    segment_x + 35 - (4 + (this.snake.length / 2 - i / 2)),
+                    segment_y
+                );
+                
+                segment.closePath();
+
+                this.ctx.translate(segment_x + 17.5, segment_y + 17.5);
+
+                this.ctx.rotate((Math.PI / 2) * direction);
+
+                this.ctx.translate(-segment_x - 17.5, -segment_y - 17.5);
+                
+                this.ctx.fillStyle = gradient;
+                this.ctx.fill(segment);
+
+                this.ctx.resetTransform();
             } else {
-                i -= 1;
-                if (i == 0) {
-                    for (let j = 0; j <= 1; j++) {
-                        let shift_dir = mod(direction + j, 4);
-
-                        if (shift_dir == Direction.Right) {
-                            x_position += BOX_SIZE;
-                        } else if (shift_dir == Direction.Left) {
-                            x_position -= BOX_SIZE;
-                        } else if (shift_dir == Direction.Down) {
-                            y_position += BOX_SIZE;
-                        } else {
-                            y_position -= BOX_SIZE;
-                        }
-                        snake.lineTo(x_position, y_position);
-                        this.ctx.lineTo(x_position, y_position);
-                    }
-
-                    break;
-                }
+                console.error("snake just went inside itself wtf");
+                return;
             }
         }
-
-        snake.closePath();
-        this.ctx.fillStyle = "blue";
-        this.ctx.fill(snake);
-        // this.ctx.strokeStyle = "red";
-        // this.ctx.lineWidth = 10;
-        // this.ctx.stroke();
     }
 }
 
