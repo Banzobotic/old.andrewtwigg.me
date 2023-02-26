@@ -2,8 +2,12 @@ import chroma from "chroma-js";
 
 export { Snake };
 
-const GRID_SIZE = 15;
+// Remember to change canvas width and height after adjusting
+const GRID_HEIGHT = 15;
+const GRID_WIDTH = 17;
+
 const BOX_SIZE = 35;
+const HALF_BOX_SIZE = BOX_SIZE / 2;
 
 enum Direction {
     Right,
@@ -96,10 +100,10 @@ class Snake {
         let time_since_last_move = timestamp - this.last_move;
         this.last_tick_start = timestamp;
 
-        // if (time_since_last_move > 500) {
-        //     this.move();
-        //     this.last_move = timestamp;
-        // }
+        if (time_since_last_move > 500) {
+            this.move();
+            this.last_move = timestamp;
+        }
         
         this.render();
 
@@ -133,7 +137,7 @@ class Snake {
             return;
         }
 
-        this.ctx.clearRect(0, 0, GRID_SIZE * BOX_SIZE, GRID_SIZE * BOX_SIZE);
+        this.ctx.clearRect(0, 0, GRID_WIDTH * BOX_SIZE, GRID_HEIGHT * BOX_SIZE);
         this.draw_background();
         this.draw_snake();
     }
@@ -172,11 +176,10 @@ class Snake {
         }
 
         this.ctx.fillStyle = pattern;
-        this.ctx.fillRect(0, 0, GRID_SIZE * BOX_SIZE, GRID_SIZE * BOX_SIZE)
+        this.ctx.fillRect(0, 0, GRID_WIDTH * BOX_SIZE, GRID_HEIGHT * BOX_SIZE)
     }
 
-    // Still to do: rounded ends, decrease slope when certain length reached and only use part of the gradient until certain length reached
-    // Also need to use contants for easier modification of values
+    // Still to do: only use part of the gradient until certain length reached
     // Eventually will need to update to be able to handle smooth movement
     draw_snake() {
         function snake_direction(current_segment: Cell, prev_segment: Cell): Direction {
@@ -196,20 +199,19 @@ class Snake {
             return;
         }
 
-        this.ctx.lineWidth = 27;
-        this.ctx.lineCap = "round";
-        this.ctx.lineJoin = "round";
-
         let direction = snake_direction(this.snake[1], this.snake[0]);
         let prev_direction = direction;
 
-        let start: Cell;
-        let end: Cell;
-        "#1f87d1"
-        "#0644af"
+        const MAX_SNAKE_WIDTH = 25;
+        const MIN_SNAKE_WIDTH = 10;
+        const MAX_SNAKE_WIDTH_DECREASE = 0.6 / 2;
 
-        let start_colour = "#670a58";
-        let end_colour = "#0644af";
+        const SNAKE_WIDTH_DECREASE = 
+            MAX_SNAKE_WIDTH_DECREASE * this.snake.length > MAX_SNAKE_WIDTH - MIN_SNAKE_WIDTH ? 
+            (MAX_SNAKE_WIDTH - MIN_SNAKE_WIDTH) / this.snake.length : 
+            MAX_SNAKE_WIDTH_DECREASE;
+
+        const MIN_GAP_TO_EDGE = (BOX_SIZE - MAX_SNAKE_WIDTH) / 2;
 
         let scale = chroma.scale(["#670a58", "#0644af"]).mode("lch");
 
@@ -222,117 +224,173 @@ class Snake {
             let turn = get_turn_dir(direction, prev_direction);
 
             if (turn == TurnDir.Straight) {
-                let segment_x = this.snake[i].x * 35;
-                let segment_y = this.snake[i].y * 35;
+                let segment_x = this.snake[i].x * BOX_SIZE;
+                let segment_y = this.snake[i].y * BOX_SIZE;
+
+                let curved_end_x = 0;
+                let curved_end_y = 0;
 
                 let segment = new Path2D();
+                let curved_end = new Path2D();
 
                 let gradient = this.ctx.createLinearGradient(
                     segment_x, 
-                    segment_y + 17.5, 
-                    segment_x + 35, 
-                    segment_y + 17.5,
+                    segment_y + HALF_BOX_SIZE, 
+                    segment_x + BOX_SIZE, 
+                    segment_y + HALF_BOX_SIZE,
                 );
                 
                 gradient.addColorStop(0, scale(i / this.snake.length).hex());
                 gradient.addColorStop(1, scale((i + 1) / this.snake.length).hex());
 
-                segment.moveTo(segment_x, segment_y + (4 + (this.snake.length / 2 - i / 2)));
-                segment.lineTo(segment_x, segment_y + 35 - (4 + (this.snake.length / 2 - i / 2)));
-                segment.lineTo(segment_x + 35, segment_y + 35 - (4 + (this.snake.length / 2 - i / 2 - 0.5)));
-                segment.lineTo(segment_x + 35, segment_y + (4 + (this.snake.length / 2 - i / 2 - 0.5)));
+                segment.moveTo(segment_x, segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE));
+                segment.lineTo(segment_x, segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE));
+                segment.lineTo(segment_x + BOX_SIZE, segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE));
+                segment.lineTo(segment_x + BOX_SIZE, segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE));
                 
                 segment.closePath();
 
-                this.ctx.translate(segment_x + 17.5, segment_y + 17.5);
+                if (i == 0) {
+                    if (direction == Direction.Left) {
+                        curved_end_x = segment_x + BOX_SIZE;
+                        curved_end_y = segment_y + HALF_BOX_SIZE;
+                    } else if (direction == Direction.Right) {
+                        curved_end_x = segment_x;
+                        curved_end_y = segment_y + HALF_BOX_SIZE;
+                    } else if (direction == Direction.Up) {
+                        curved_end_x = segment_x + HALF_BOX_SIZE;
+                        curved_end_y = segment_y + BOX_SIZE;
+                    } else {
+                        curved_end_x = segment_x + HALF_BOX_SIZE;
+                        curved_end_y = segment_y;
+                    }
+
+                    curved_end.arc(curved_end_x, curved_end_y, (MAX_SNAKE_WIDTH - SNAKE_WIDTH_DECREASE * this.snake.length * 2) / 2, 0, Math.PI);
+
+                    if ((MAX_SNAKE_WIDTH - SNAKE_WIDTH_DECREASE * this.snake.length * 2) < MIN_SNAKE_WIDTH) {
+                        console.error(`Something wrong with SNAKE_WIDTH_DECREASE, end width is ${MAX_SNAKE_WIDTH - SNAKE_WIDTH_DECREASE * this.snake.length * 2}`)
+                    }
+                } else if (i == this.snake.length - 1) {
+                    if (direction == Direction.Right) {
+                        curved_end_x = segment_x + BOX_SIZE;
+                        curved_end_y = segment_y + HALF_BOX_SIZE;
+                    } else if (direction == Direction.Left) {
+                        curved_end_x = segment_x;
+                        curved_end_y = segment_y + HALF_BOX_SIZE;
+                    } else if (direction == Direction.Down) {
+                        curved_end_x = segment_x + HALF_BOX_SIZE;
+                        curved_end_y = segment_y + BOX_SIZE;
+                    } else {
+                        curved_end_x = segment_x + HALF_BOX_SIZE;
+                        curved_end_y = segment_y;
+                    }
+
+                    curved_end.arc(curved_end_x, curved_end_y, MAX_SNAKE_WIDTH / 2, 0, Math.PI)
+                }
+
+                this.ctx.translate(segment_x + HALF_BOX_SIZE, segment_y + HALF_BOX_SIZE);
                 this.ctx.rotate((Math.PI / 2) * direction);
-                this.ctx.translate(-segment_x - 17.5, -segment_y - 17.5);
+                this.ctx.translate(-segment_x - HALF_BOX_SIZE, -segment_y - HALF_BOX_SIZE);
                 
                 this.ctx.fillStyle = gradient;
                 this.ctx.fill(segment);
-
+                
                 this.ctx.resetTransform();
+
+                if (i == 0) {
+                    this.ctx.translate(curved_end_x, curved_end_y);
+                    this.ctx.rotate((Math.PI / 2) * (direction + 1));
+                    this.ctx.translate(-curved_end_x, -curved_end_y);
+                    this.ctx.fill(curved_end);
+                    this.ctx.resetTransform();
+                } else if (i == this.snake.length - 1) {
+                    this.ctx.translate(curved_end_x, curved_end_y);
+                    this.ctx.rotate((Math.PI / 2) * (direction - 1));
+                    this.ctx.translate(-curved_end_x, -curved_end_y);
+                    this.ctx.fill(curved_end);
+                    this.ctx.resetTransform();
+                }
             } else if (turn == TurnDir.Clockwise) {
-                let segment_x = this.snake[i].x * 35;
-                let segment_y = this.snake[i].y * 35;
+                let segment_x = this.snake[i].x * BOX_SIZE;
+                let segment_y = this.snake[i].y * BOX_SIZE;
 
                 let segment = new Path2D();
 
                 let gradient = this.ctx.createLinearGradient(
-                    segment_x + 17.5, 
-                    segment_y + 35, 
-                    segment_x + 35, 
-                    segment_y + 17.5,
+                    segment_x + HALF_BOX_SIZE, 
+                    segment_y + BOX_SIZE, 
+                    segment_x + BOX_SIZE, 
+                    segment_y + HALF_BOX_SIZE,
                 );
 
                 gradient.addColorStop(0, scale(i / this.snake.length).hex());
                 gradient.addColorStop(1, scale((i + 1) / this.snake.length).hex());
 
-                segment.moveTo(segment_x + (4 + (this.snake.length / 2 - i / 2)), segment_y + 35);
+                segment.moveTo(segment_x + (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE), segment_y + BOX_SIZE);
                 segment.quadraticCurveTo(
-                    segment_x + (4 + (this.snake.length / 2 - i / 2 - 0.5)), 
-                    segment_y + (4 + (this.snake.length / 2 - i / 2 - 0.5)),
-                    segment_x + 35,
-                    segment_y + (4 + (this.snake.length / 2 - i / 2 - 0.5))
+                    segment_x + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE), 
+                    segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE),
+                    segment_x + BOX_SIZE,
+                    segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE)
                 )
-                segment.lineTo(segment_x + 35, segment_y + 35 - (4 + (this.snake.length / 2 - i / 2 - 0.5)));
+                segment.lineTo(segment_x + BOX_SIZE, segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE));
                 segment.quadraticCurveTo(
-                    segment_x + 35 - (4 + (this.snake.length / 2 - i / 2)),
-                    segment_y + 35 - (4 + (this.snake.length / 2 - i / 2)),
-                    segment_x + 35 - (4 + (this.snake.length / 2 - i / 2)),
-                    segment_y + 35
+                    segment_x + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE),
+                    segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE),
+                    segment_x + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE),
+                    segment_y + BOX_SIZE
                 )
                 
                 segment.closePath();
 
-                this.ctx.translate(segment_x + 17.5, segment_y + 17.5);
+                this.ctx.translate(segment_x + HALF_BOX_SIZE, segment_y + HALF_BOX_SIZE);
 
                 this.ctx.rotate((Math.PI / 2) * direction);
 
-                this.ctx.translate(-segment_x - 17.5, -segment_y - 17.5);
+                this.ctx.translate(-segment_x - HALF_BOX_SIZE, -segment_y - HALF_BOX_SIZE);
                 
                 this.ctx.fillStyle = gradient;
                 this.ctx.fill(segment);
 
                 this.ctx.resetTransform();
             } else if (turn == TurnDir.AntiClockwise) {
-                let segment_x = this.snake[i].x * 35;
-                let segment_y = this.snake[i].y * 35;
+                let segment_x = this.snake[i].x * BOX_SIZE;
+                let segment_y = this.snake[i].y * BOX_SIZE;
 
                 let segment = new Path2D();
 
                 let gradient = this.ctx.createLinearGradient(
-                    segment_x + 17.5, 
+                    segment_x + HALF_BOX_SIZE, 
                     segment_y, 
-                    segment_x + 35, 
-                    segment_y + 17.5,
+                    segment_x + BOX_SIZE, 
+                    segment_y + HALF_BOX_SIZE,
                 );
 
                 gradient.addColorStop(0, scale(i / this.snake.length).hex());
                 gradient.addColorStop(1, scale((i + 1) / this.snake.length).hex());
 
-                segment.moveTo(segment_x + (4 + (this.snake.length / 2 - i / 2)), segment_y);
+                segment.moveTo(segment_x + (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE), segment_y);
                 segment.quadraticCurveTo(
-                    segment_x + (4 + (this.snake.length / 2 - i / 2 - 0.5)), 
-                    segment_y + 35 - (4 + (this.snake.length / 2 - i / 2 - 0.5)),
-                    segment_x + 35,
-                    segment_y + 35 - (4 + (this.snake.length / 2 - i / 2 - 0.5))
+                    segment_x + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE), 
+                    segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE),
+                    segment_x + BOX_SIZE,
+                    segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE)
                 );
-                segment.lineTo(segment_x + 35, segment_y + (4 + (this.snake.length / 2 - i / 2 - 0.5)));
+                segment.lineTo(segment_x + BOX_SIZE, segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1) * SNAKE_WIDTH_DECREASE));
                 segment.quadraticCurveTo(
-                    segment_x + 35 - (4 + (this.snake.length / 2 - i / 2)),
-                    segment_y + (4 + (this.snake.length / 2 - i / 2)),
-                    segment_x + 35 - (4 + (this.snake.length / 2 - i / 2)),
+                    segment_x + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE),
+                    segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE),
+                    segment_x + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i) * SNAKE_WIDTH_DECREASE),
                     segment_y
                 );
                 
                 segment.closePath();
 
-                this.ctx.translate(segment_x + 17.5, segment_y + 17.5);
+                this.ctx.translate(segment_x + HALF_BOX_SIZE, segment_y + HALF_BOX_SIZE);
 
                 this.ctx.rotate((Math.PI / 2) * direction);
 
-                this.ctx.translate(-segment_x - 17.5, -segment_y - 17.5);
+                this.ctx.translate(-segment_x - HALF_BOX_SIZE, -segment_y - HALF_BOX_SIZE);
                 
                 this.ctx.fillStyle = gradient;
                 this.ctx.fill(segment);

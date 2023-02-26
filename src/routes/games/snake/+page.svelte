@@ -40,7 +40,7 @@
 <body>
     <Navbar/>
 
-    <canvas id="game_board" width="525" height="525"></canvas>
+    <canvas id="game_board" width="595" height="525"></canvas>
 </body>
 
 <style>
