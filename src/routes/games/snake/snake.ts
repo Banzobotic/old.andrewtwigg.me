@@ -546,14 +546,14 @@ class Snake {
                 if (i == 0) {
                     segment.moveTo(end_1_new.x, end_1_new.y);
                     segment.quadraticCurveTo(
-                        segment_x + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE) + HALF_BOX_SIZE * this.time_step, 
+                        segment_x + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE) + HALF_BOX_SIZE * this.time_step, 
                         segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE),
                         segment_x + BOX_SIZE,
                         segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE)
                     )
                     segment.lineTo(segment_x + BOX_SIZE, segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE));
                     segment.quadraticCurveTo(
-                        segment_x + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i + this.time_step) * SNAKE_WIDTH_DECREASE) * (1 - this.time_step),
+                        segment_x + (MIN_GAP_TO_EDGE + (this.snake.length - i + this.time_step) * SNAKE_WIDTH_DECREASE) * (1 - this.time_step) + HALF_BOX_SIZE * this.time_step,
                         segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i + this.time_step) * SNAKE_WIDTH_DECREASE),
                         end_2_new.x,
                         end_2_new.y,
