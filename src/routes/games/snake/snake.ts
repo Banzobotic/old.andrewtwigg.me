@@ -52,6 +52,7 @@ class Snake {
     private last_tick_start: number | null;
     private last_move: number | null;
     private time_step: number;
+    private inputs: Array<Direction>;
 
     constructor() {
         this.snake = [new SnakeSegment(4, 8), new SnakeSegment(3, 8), new SnakeSegment(3, 7), new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(5, 6), new SnakeSegment(5, 5), new SnakeSegment(5, 4), new SnakeSegment(4, 4), new SnakeSegment(3, 4), new SnakeSegment(3, 5), new SnakeSegment(2, 5), new SnakeSegment(1, 5), new SnakeSegment(1, 4), new SnakeSegment(1, 3), new SnakeSegment(1, 2), new SnakeSegment(2, 2), new SnakeSegment(2, 3), new SnakeSegment(3, 3)];
@@ -65,6 +66,7 @@ class Snake {
         this.last_tick_start = null;
         this.last_move = null;
         this.time_step = 0;
+        this.inputs = [];
     }
 
     set_document_and_window(document: Document, window: Window) {
@@ -89,6 +91,32 @@ class Snake {
         this.ctx = canvas.getContext("2d");
     }
 
+    on_key_down(event: KeyboardEvent) {
+        if (this.inputs.length >= 3) {
+            return;
+        }
+
+        let input_dir: Direction;
+
+        if (event.key == "ArrowDown" || event.key == "S") {
+            input_dir = Direction.Down;
+        } else if (event.key == "ArrowUp" || event.key == "W") {
+            input_dir = Direction.Up;
+        } else if (event.key == "ArrowLeft" || event.key == "A") {
+            input_dir = Direction.Left;
+        } else if (event.key == "ArrowRight" || event.key == "D") {
+            input_dir = Direction.Right;
+        } else {
+            return;
+        }
+
+        if (this.inputs.length === 0 && input_dir % 2 !== this.direction % 2) {
+            this.inputs.push(input_dir);  
+        } else if (this.inputs.length !== 0 && this.inputs[this.inputs.length - 1] % 2 !== input_dir % 2) {
+            this.inputs.push(input_dir);
+        }
+    }
+
     game_loop(timestamp: DOMHighResTimeStamp) {
         if (this.window == null) {
             console.error("Window not instantiated before game loop started")
@@ -103,12 +131,12 @@ class Snake {
         let time_since_last_move = timestamp - this.last_move;
         this.last_tick_start = timestamp;
 
-        if (time_since_last_move > 500) {
+        if (time_since_last_move > 150) {
             this.move();
             this.last_move = timestamp;
             this.time_step = 0;
         } else {
-            this.time_step = time_since_last_move / 500;
+            this.time_step = time_since_last_move / 150;
         }
         
         this.render();
@@ -122,6 +150,11 @@ class Snake {
     move() {
         let new_head: SnakeSegment;
         let current_head = this.snake[this.snake.length - 1];
+
+        if (this.inputs.length !== 0) {
+            this.direction = this.inputs[0];
+            this.inputs.shift();
+        }
 
         if (this.direction == Direction.Right) {
             new_head = new SnakeSegment(current_head.x + 1, current_head.y);

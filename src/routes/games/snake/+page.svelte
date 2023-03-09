@@ -27,6 +27,10 @@
         snake.set_document_and_window(document, window);
         snake.set_canvas();
 
+        document.addEventListener("keydown", (event: KeyboardEvent) => {
+            snake.on_key_down(event)
+        })
+
         window.requestAnimationFrame(function(timestamp) {
             snake.game_loop(timestamp)
         })
