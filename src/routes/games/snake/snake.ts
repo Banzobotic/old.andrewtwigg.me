@@ -53,6 +53,7 @@ class Snake {
     private last_move: number | null;
     private time_step: number;
     private inputs: Array<Direction>;
+    private ate_food: boolean;
 
     constructor() {
         this.snake = [new SnakeSegment(4, 8), new SnakeSegment(3, 8), new SnakeSegment(3, 7), new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(5, 6), new SnakeSegment(5, 5), new SnakeSegment(5, 4), new SnakeSegment(4, 4), new SnakeSegment(3, 4), new SnakeSegment(3, 5), new SnakeSegment(2, 5), new SnakeSegment(1, 5), new SnakeSegment(1, 4), new SnakeSegment(1, 3), new SnakeSegment(1, 2), new SnakeSegment(2, 2), new SnakeSegment(2, 3), new SnakeSegment(3, 3)];
@@ -67,6 +68,7 @@ class Snake {
         this.last_move = null;
         this.time_step = 0;
         this.inputs = [];
+        this.ate_food = false;
     }
 
     set_document_and_window(document: Document, window: Window) {
@@ -134,7 +136,7 @@ class Snake {
         if (time_since_last_move > 150) {
             this.move();
             this.last_move = timestamp;
-            this.time_step = 0;
+            this.time_step -= 1;
         } else {
             this.time_step = time_since_last_move / 150;
         }
@@ -153,7 +155,9 @@ class Snake {
 
         if (this.inputs.length !== 0) {
             this.direction = this.inputs[0];
-            this.inputs.shift();
+            if (!this.ate_food) {
+                this.inputs.shift();
+            }
         }
 
         if (this.direction == Direction.Right) {
@@ -178,6 +182,7 @@ class Snake {
 
         this.ctx.clearRect(0, 0, GRID_WIDTH * BOX_SIZE, GRID_HEIGHT * BOX_SIZE);
         this.draw_background();
+        this.draw_food();
         this.draw_snake();
     }
 
@@ -327,8 +332,8 @@ class Snake {
                 } else if (i == this.snake.length - 1) {
                     segment.moveTo(segment_x, segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i + this.time_step) * SNAKE_WIDTH_DECREASE));
                     segment.lineTo(segment_x, segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i + this.time_step) * SNAKE_WIDTH_DECREASE));
-                    segment.lineTo(segment_x + BOX_SIZE + BOX_SIZE * this.time_step, segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE));
-                    segment.lineTo(segment_x + BOX_SIZE + BOX_SIZE * this.time_step, segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE));
+                    segment.lineTo(segment_x + BOX_SIZE * this.time_step, segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE));
+                    segment.lineTo(segment_x + BOX_SIZE * this.time_step, segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i - 1 + this.time_step) * SNAKE_WIDTH_DECREASE));
                 } else {
                     segment.moveTo(segment_x, segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i + this.time_step) * SNAKE_WIDTH_DECREASE));
                     segment.lineTo(segment_x, segment_y + BOX_SIZE - (MIN_GAP_TO_EDGE + (this.snake.length - i + this.time_step) * SNAKE_WIDTH_DECREASE));
@@ -360,17 +365,17 @@ class Snake {
                     }
                 } else if (i == this.snake.length - 1) {
                     if (direction == Direction.Right) {
-                        curved_end_x = segment_x + BOX_SIZE + BOX_SIZE * this.time_step;
+                        curved_end_x = segment_x + BOX_SIZE * this.time_step;
                         curved_end_y = segment_y + HALF_BOX_SIZE;
                     } else if (direction == Direction.Left) {
-                        curved_end_x = segment_x - BOX_SIZE * this.time_step;
+                        curved_end_x = segment_x + BOX_SIZE - BOX_SIZE * this.time_step;
                         curved_end_y = segment_y + HALF_BOX_SIZE;
                     } else if (direction == Direction.Down) {
                         curved_end_x = segment_x + HALF_BOX_SIZE;
-                        curved_end_y = segment_y + BOX_SIZE + BOX_SIZE * this.time_step;
+                        curved_end_y = segment_y + BOX_SIZE * this.time_step;
                     } else {
                         curved_end_x = segment_x + HALF_BOX_SIZE;
-                        curved_end_y = segment_y - BOX_SIZE * this.time_step;
+                        curved_end_y = segment_y + BOX_SIZE - BOX_SIZE * this.time_step;
                     }
 
                     curved_end.arc(curved_end_x, curved_end_y, MAX_SNAKE_WIDTH / 2, 0, Math.PI * 2)
@@ -496,6 +501,26 @@ class Snake {
                 return;
             }
         }
+    }
+
+    draw_food() {
+        if (this.ctx == null) {
+            console.error("draw_snake called before canvas context instantiated");
+            return;
+        }
+        
+        let food = new Path2D();
+
+        food.arc(
+            this.food.x * BOX_SIZE + HALF_BOX_SIZE,
+            this.food.y * BOX_SIZE + HALF_BOX_SIZE,
+            HALF_BOX_SIZE - 5,
+            0,
+            Math.PI * 2
+        );
+
+        this.ctx.fillStyle = "red";
+        this.ctx.fill(food);
     }
 }
 
