@@ -38,11 +38,11 @@ function get_turn_dir(direction: Direction, prev_direction: Direction): TurnDir 
 
 function mod(n: number, m: number) {
     return ((n % m) + m) % m;
-  }
+}
 
 class Snake {
     private snake: Array<SnakeSegment>;
-    private moving: boolean;
+    public moving: boolean;
     private direction: Direction;
     private food: Coordinate;
     private draw_list: Array<BodySegment>;
@@ -93,6 +93,10 @@ class Snake {
         this.ctx = canvas.getContext("2d");
     }
 
+    start_moving() {
+        this.moving = true;
+    }
+
     on_key_down(event: KeyboardEvent) {
         if (this.inputs.length >= 3) {
             return;
@@ -124,23 +128,26 @@ class Snake {
             console.error("Window not instantiated before game loop started")
             return;
         }
-        if (this.last_tick_start == null || this.last_move == null) {
+
+        if (this.moving) {
+            if (this.last_tick_start == null || this.last_move == null) {
+                this.last_tick_start = timestamp;
+                this.last_move = timestamp;
+            }
+
+            let tick_time = timestamp - this.last_tick_start;
+            let time_since_last_move = timestamp - this.last_move;
             this.last_tick_start = timestamp;
-            this.last_move = timestamp;
+
+            if (time_since_last_move > 150) {
+                this.move();
+                this.last_move = timestamp;
+                this.time_step -= 1;
+            } else {
+                this.time_step = time_since_last_move / 150;
+            }
         }
 
-        let tick_time = timestamp - this.last_tick_start;
-        let time_since_last_move = timestamp - this.last_move;
-        this.last_tick_start = timestamp;
-
-        if (time_since_last_move > 150) {
-            this.move();
-            this.last_move = timestamp;
-            this.time_step -= 1;
-        } else {
-            this.time_step = time_since_last_move / 150;
-        }
-        
         this.render();
 
         let snake = this;
@@ -168,6 +175,11 @@ class Snake {
             new_head = new SnakeSegment(current_head.x, current_head.y + 1);
         } else {
             new_head = new SnakeSegment(current_head.x, current_head.y - 1);
+        }
+
+        if (new_head.x < 0 || new_head.y < 0 || new_head.x >= GRID_WIDTH || new_head.y >= GRID_HEIGHT) {
+            this.moving = false;
+            return;
         }
 
         this.snake.push(new_head);

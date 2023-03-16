@@ -34,7 +34,11 @@
         window.requestAnimationFrame(function(timestamp) {
             snake.game_loop(timestamp)
         })
-    })
+    });
+
+    function start_moving() {
+        snake.moving = true;
+    }
 </script>
 
 <head>
@@ -44,6 +48,7 @@
 <body>
     <Navbar/>
 
+    <button type="button" on:click={start_moving} style="height: 30px; width: 50px;"></button>
     <canvas id="game_board" width="595" height="525"></canvas>
 </body>
 
