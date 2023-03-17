@@ -1,5 +1,6 @@
 import chroma from "chroma-js";
-import { xlink_attr } from "svelte/internal";
+import { writable } from "svelte/store";
+import type { Writable } from "svelte/store";
 
 export { Snake };
 
@@ -54,6 +55,10 @@ class Snake {
     private time_step: number;
     private inputs: Array<Direction>;
     private ate_food: boolean;
+    public score: number;
+    private high_score: number;
+    public score_store: Writable<number>;
+    public high_score_store: Writable<number>;
 
     constructor() {
         this.snake = [new SnakeSegment(4, 8), new SnakeSegment(3, 8), new SnakeSegment(3, 7), new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(5, 6), new SnakeSegment(5, 5), new SnakeSegment(5, 4), new SnakeSegment(4, 4), new SnakeSegment(3, 4), new SnakeSegment(3, 5), new SnakeSegment(2, 5), new SnakeSegment(1, 5), new SnakeSegment(1, 4), new SnakeSegment(1, 3), new SnakeSegment(1, 2), new SnakeSegment(2, 2), new SnakeSegment(2, 3), new SnakeSegment(3, 3)];
@@ -69,6 +74,10 @@ class Snake {
         this.time_step = 0;
         this.inputs = [];
         this.ate_food = false;
+        this.score = 0;
+        this.high_score = 0;
+        this.score_store = writable(0);
+        this.high_score_store = writable(0);
     }
 
     set_document_and_window(document: Document, window: Window) {
@@ -93,7 +102,8 @@ class Snake {
         this.ctx = canvas.getContext("2d");
     }
 
-    start_moving() {
+    start_snake() {
+        this.score = 0;
         this.moving = true;
     }
 
@@ -180,10 +190,26 @@ class Snake {
         if (new_head.x < 0 || new_head.y < 0 || new_head.x >= GRID_WIDTH || new_head.y >= GRID_HEIGHT) {
             this.moving = false;
             return;
+        } else if (this.snake.some(segment => segment.x === new_head.x && segment.y === new_head.y)) {
+            console.log("hit tail");
+            this.moving = false;
+            return;
+        }
+
+        if (new_head.x === this.food.x && new_head.y === this.food.y) {
+            this.food_eaten();
         }
 
         this.snake.push(new_head);
         this.snake.shift();
+    }
+
+    food_eaten() {
+        this.score += 1;
+        this.high_score = Math.max(this.score, this.high_score);
+        this.score_store.set(this.score);
+        this.high_score_store.set(this.high_score);
+        this.food = new Coordinate(Math.floor(Math.random() * GRID_WIDTH), Math.floor(Math.random() * GRID_HEIGHT));
     }
 
     render() {

@@ -11,6 +11,16 @@
 
     let snake = new Snake;
 
+    let score: number;
+    let high_score: number;
+
+    snake.score_store.subscribe(value => {
+        score = value;
+    });
+    snake.high_score_store.subscribe(value => {
+        high_score = value;
+    });
+
     if (browser) {
         adjusted_width = calculate_units(window);
 
@@ -38,6 +48,7 @@
 
     function start_moving() {
         snake.moving = true;
+        snake.score = 0;
     }
 </script>
 
@@ -49,6 +60,8 @@
     <Navbar/>
 
     <button type="button" on:click={start_moving} style="height: 30px; width: 50px;"></button>
+    <p>Score: {score}</p>
+    <p>High Score: {high_score}</p>
     <canvas id="game_board" width="595" height="525"></canvas>
 </body>
 
