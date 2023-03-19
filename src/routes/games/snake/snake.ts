@@ -43,6 +43,7 @@ function mod(n: number, m: number) {
 
 class Snake {
     private snake: Array<SnakeSegment>;
+    private snake_start: Array<SnakeSegment>;
     public moving: boolean;
     private direction: Direction;
     private food: Coordinate;
@@ -59,12 +60,14 @@ class Snake {
     private high_score: number;
     public score_store: Writable<number>;
     public high_score_store: Writable<number>;
+    public end_screen: boolean;
 
     constructor() {
-        this.snake = [new SnakeSegment(4, 8), new SnakeSegment(3, 8), new SnakeSegment(3, 7), new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(5, 6), new SnakeSegment(5, 5), new SnakeSegment(5, 4), new SnakeSegment(4, 4), new SnakeSegment(3, 4), new SnakeSegment(3, 5), new SnakeSegment(2, 5), new SnakeSegment(1, 5), new SnakeSegment(1, 4), new SnakeSegment(1, 3), new SnakeSegment(1, 2), new SnakeSegment(2, 2), new SnakeSegment(2, 3), new SnakeSegment(3, 3)];
+        this.snake = [new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(6, 7)];
+        this.snake_start = [new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(6, 7)];
         this.moving = false;
         this.direction = Direction.Right;
-        this.food = new Coordinate(10, 7);
+        this.food = new Coordinate(12, 7);
         this.draw_list = [];
         this.document = null;
         this.window = null;
@@ -78,6 +81,7 @@ class Snake {
         this.high_score = 0;
         this.score_store = writable(0);
         this.high_score_store = writable(0);
+        this.end_screen = false;
     }
 
     set_document_and_window(document: Document, window: Window) {
@@ -114,13 +118,17 @@ class Snake {
 
         let input_dir: Direction;
 
-        if (event.key == "ArrowDown" || event.key == "S") {
+        if (!this.end_screen) {
+            this.moving = true;
+        }
+
+        if (event.key == "ArrowDown" || event.key == "s") {
             input_dir = Direction.Down;
-        } else if (event.key == "ArrowUp" || event.key == "W") {
+        } else if (event.key == "ArrowUp" || event.key == "w") {
             input_dir = Direction.Up;
-        } else if (event.key == "ArrowLeft" || event.key == "A") {
+        } else if (event.key == "ArrowLeft" || event.key == "a") {
             input_dir = Direction.Left;
-        } else if (event.key == "ArrowRight" || event.key == "D") {
+        } else if (event.key == "ArrowRight" || event.key == "d") {
             input_dir = Direction.Right;
         } else {
             return;
@@ -172,9 +180,7 @@ class Snake {
 
         if (this.inputs.length !== 0) {
             this.direction = this.inputs[0];
-            if (!this.ate_food) {
-                this.inputs.shift();
-            }
+            this.inputs.shift();
         }
 
         if (this.direction == Direction.Right) {
@@ -189,10 +195,12 @@ class Snake {
 
         if (new_head.x < 0 || new_head.y < 0 || new_head.x >= GRID_WIDTH || new_head.y >= GRID_HEIGHT) {
             this.moving = false;
+            this.end_screen = true;
             return;
         } else if (this.snake.some(segment => segment.x === new_head.x && segment.y === new_head.y)) {
             console.log("hit tail");
             this.moving = false;
+            this.end_screen = true;
             return;
         }
 
@@ -201,7 +209,11 @@ class Snake {
         }
 
         this.snake.push(new_head);
-        this.snake.shift();
+        if (!this.ate_food) {
+            this.snake.shift();
+        } else {
+            this.ate_food = false;
+        }
     }
 
     food_eaten() {
@@ -210,6 +222,10 @@ class Snake {
         this.score_store.set(this.score);
         this.high_score_store.set(this.high_score);
         this.food = new Coordinate(Math.floor(Math.random() * GRID_WIDTH), Math.floor(Math.random() * GRID_HEIGHT));
+        while (this.snake.some(segment => segment.x == this.food.x && segment.y == this.food.y)) {
+            this.food = new Coordinate(Math.floor(Math.random() * GRID_WIDTH), Math.floor(Math.random() * GRID_HEIGHT));
+        }
+        this.ate_food = true;
     }
 
     render() {
@@ -311,12 +327,12 @@ class Snake {
         let prev_direction = direction;
 
         const MAX_SNAKE_WIDTH = 25;
-        const MIN_SNAKE_WIDTH = 10;
+        const MIN_SNAKE_WIDTH = 13;
         const MAX_SNAKE_WIDTH_DECREASE = 0.6 / 2;
 
         const SNAKE_WIDTH_DECREASE = 
-            MAX_SNAKE_WIDTH_DECREASE * this.snake.length > MAX_SNAKE_WIDTH - MIN_SNAKE_WIDTH ? 
-            (MAX_SNAKE_WIDTH - MIN_SNAKE_WIDTH) / this.snake.length : 
+            MAX_SNAKE_WIDTH_DECREASE * this.snake.length * 2 > MAX_SNAKE_WIDTH - MIN_SNAKE_WIDTH ? 
+            (MAX_SNAKE_WIDTH - MIN_SNAKE_WIDTH) / this.snake.length / 2 : 
             MAX_SNAKE_WIDTH_DECREASE;
 
         const MIN_GAP_TO_EDGE = (BOX_SIZE - MAX_SNAKE_WIDTH) / 2;
@@ -359,8 +375,8 @@ class Snake {
                     segment_y + HALF_BOX_SIZE,
                 );
                 
-                gradient.addColorStop(0, scale(i / this.snake.length).hex());
-                gradient.addColorStop(1, scale((i + 1) / this.snake.length).hex());
+                gradient.addColorStop(0, scale((i - this.time_step) / this.snake.length).hex());
+                gradient.addColorStop(1, scale((i + 1 - this.time_step) / this.snake.length).hex());
 
                 if (i == 0) {
                     segment.moveTo(segment_x + BOX_SIZE * this.time_step, segment_y + (MIN_GAP_TO_EDGE + (this.snake.length - i + this.time_step) * SNAKE_WIDTH_DECREASE));
@@ -399,7 +415,7 @@ class Snake {
                     curved_end.arc(curved_end_x, curved_end_y, (MAX_SNAKE_WIDTH - 0.5 - SNAKE_WIDTH_DECREASE * this.snake.length * 2) / 2, 0, Math.PI * 2);
 
                     if ((MAX_SNAKE_WIDTH - SNAKE_WIDTH_DECREASE * this.snake.length * 2) < MIN_SNAKE_WIDTH) {
-                        console.error(`Something wrong with SNAKE_WIDTH_DECREASE, end width is ${MAX_SNAKE_WIDTH - SNAKE_WIDTH_DECREASE * this.snake.length * 2}`)
+                        console.error(`Something wrong with SNAKE_WIDTH_DECREASE (${SNAKE_WIDTH_DECREASE}), end width is ${MAX_SNAKE_WIDTH - SNAKE_WIDTH_DECREASE * this.snake.length * 2}`);
                     }
                 } else if (i == this.snake.length - 1) {
                     if (direction == Direction.Right) {
@@ -428,6 +444,12 @@ class Snake {
                 
                 this.ctx.resetTransform();
 
+                if (i == 0) {
+                    this.ctx.fillStyle = scale(0).hex();
+                } else {
+                    this.ctx.fillStyle = scale(1 - 1.25 / this.snake.length).hex();
+                }
+
                 this.ctx.fill(curved_end);
             } else if (turn == TurnDir.Clockwise || turn == TurnDir.AntiClockwise) {
                 let segment_x = this.snake[i].x * BOX_SIZE;
@@ -443,8 +465,8 @@ class Snake {
                     segment_y + HALF_BOX_SIZE,
                 );
 
-                gradient.addColorStop(0, scale(i / this.snake.length).hex());
-                gradient.addColorStop(1, scale((i + 1) / this.snake.length).hex());
+                gradient.addColorStop(0, scale((i - this.time_step) / this.snake.length).hex());
+                gradient.addColorStop(1, scale((i + 1 - this.time_step) / this.snake.length).hex());
 
                 let snake_end = bezier_curve(
                     segment_x + HALF_BOX_SIZE,

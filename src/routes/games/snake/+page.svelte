@@ -59,10 +59,18 @@
 <body>
     <Navbar/>
 
-    <button type="button" on:click={start_moving} style="height: 30px; width: 50px;"></button>
-    <p>Score: {score}</p>
-    <p>High Score: {high_score}</p>
-    <canvas id="game_board" width="595" height="525"></canvas>
+    <!-- <button type="button" on:click={start_moving} style="height: 30px; width: 50px;"></button> -->
+    <div class="game">
+        <div class="scores-container">
+            <p class="score">{score}</p>
+            <p class="high-score">{high_score}</p>
+        </div>
+        <div class="end-screen">
+            <p>Score: {score}</p>
+            <p>High Score: {high_score}</p>
+        </div>
+        <canvas id="game_board" width="595" height="525"></canvas>
+    </div>
 </body>
 
 <style>
@@ -72,8 +80,43 @@
     }
 
     canvas {
-        margin: auto;
         display: block;
+        margin: 0 auto;
+        padding-bottom: 50px;
+    }
+
+    .game {
+        background-color: green;
+        margin: auto;
         margin-top: 5vmin;
+        width: 695px;
+    }
+    
+    .scores-container {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 60px;
+        color: white;
+        display: flex;
+        padding: 10px 50px;
+    }
+
+    .score {
+        margin: auto auto auto 50px;
+    }
+    
+    .high-score {
+        margin: auto 50px auto auto;
+    }
+
+    .end-screen {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 40px;
+        text-align: center;
+        background-color: rgb(39, 126, 232);
+        border-radius: 5px;
+        width: 300px;
+        height: 300px;
+        /* position: absolute; */
+        margin: 0 auto;
     }
 </style>
