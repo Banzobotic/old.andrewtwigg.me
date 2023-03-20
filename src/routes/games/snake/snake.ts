@@ -43,7 +43,6 @@ function mod(n: number, m: number) {
 
 class Snake {
     private snake: Array<SnakeSegment>;
-    private snake_start: Array<SnakeSegment>;
     public moving: boolean;
     private direction: Direction;
     private food: Coordinate;
@@ -60,11 +59,11 @@ class Snake {
     private high_score: number;
     public score_store: Writable<number>;
     public high_score_store: Writable<number>;
-    public end_screen: boolean;
+    private end_screen: boolean;
+    public end_screen_store: Writable<string>;
 
     constructor() {
         this.snake = [new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(6, 7)];
-        this.snake_start = [new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(6, 7)];
         this.moving = false;
         this.direction = Direction.Right;
         this.food = new Coordinate(12, 7);
@@ -82,6 +81,15 @@ class Snake {
         this.score_store = writable(0);
         this.high_score_store = writable(0);
         this.end_screen = false;
+        this.end_screen_store = writable("hidden");
+    }
+
+    snake_start() {
+        return [new SnakeSegment(4, 7), new SnakeSegment(5, 7), new SnakeSegment(6, 7)];
+    }
+
+    food_start() {
+        return new Coordinate(12, 7);
     }
 
     set_document_and_window(document: Document, window: Window) {
@@ -141,6 +149,14 @@ class Snake {
         }
     }
 
+    update_end_screen_visibility() {
+        if (this.end_screen === true) {
+            this.end_screen_store.set("visible")
+        } else {
+            this.end_screen_store.set("hidden")
+        }
+    }
+
     game_loop(timestamp: DOMHighResTimeStamp) {
         if (this.window == null) {
             console.error("Window not instantiated before game loop started")
@@ -157,12 +173,12 @@ class Snake {
             let time_since_last_move = timestamp - this.last_move;
             this.last_tick_start = timestamp;
 
-            if (time_since_last_move > 150) {
+            if (time_since_last_move > 120) {
                 this.move();
                 this.last_move = timestamp;
                 this.time_step -= 1;
             } else {
-                this.time_step = time_since_last_move / 150;
+                this.time_step = time_since_last_move / 120;
             }
         }
 
@@ -196,11 +212,13 @@ class Snake {
         if (new_head.x < 0 || new_head.y < 0 || new_head.x >= GRID_WIDTH || new_head.y >= GRID_HEIGHT) {
             this.moving = false;
             this.end_screen = true;
+            this.update_end_screen_visibility();
             return;
         } else if (this.snake.some(segment => segment.x === new_head.x && segment.y === new_head.y)) {
             console.log("hit tail");
             this.moving = false;
             this.end_screen = true;
+            this.update_end_screen_visibility();
             return;
         }
 
@@ -226,6 +244,18 @@ class Snake {
             this.food = new Coordinate(Math.floor(Math.random() * GRID_WIDTH), Math.floor(Math.random() * GRID_HEIGHT));
         }
         this.ate_food = true;
+    }
+
+    play_again() {
+        this.score = 0;
+        this.end_screen = false;
+        this.update_end_screen_visibility();
+        this.snake = this.snake_start();
+        this.food = this.food_start();
+        this.inputs = [];
+        this.moving = false;
+        this.score_store.set(0);
+        this.direction = Direction.Right;
     }
 
     render() {

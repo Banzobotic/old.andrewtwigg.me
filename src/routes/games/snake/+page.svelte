@@ -13,12 +13,16 @@
 
     let score: number;
     let high_score: number;
+    let end_screen_visibility: string;
 
     snake.score_store.subscribe(value => {
         score = value;
     });
     snake.high_score_store.subscribe(value => {
         high_score = value;
+    });
+    snake.end_screen_store.subscribe(value => {
+        end_screen_visibility = value
     });
 
     if (browser) {
@@ -50,6 +54,10 @@
         snake.moving = true;
         snake.score = 0;
     }
+
+    function play_again() {
+        snake.play_again();
+    }
 </script>
 
 <head>
@@ -65,9 +73,16 @@
             <p class="score">{score}</p>
             <p class="high-score">{high_score}</p>
         </div>
-        <div class="end-screen">
-            <p>Score: {score}</p>
-            <p>High Score: {high_score}</p>
+        <div class="end-screen" style="visibility: {end_screen_visibility};">
+            <div class="score-line">
+                <p class="left">Score:</p>
+                <p class="right">{score}</p>
+            </div>
+            <div class="score-line">
+                <p class="left">High Score:</p>
+                <p class="right">{high_score}</p>
+            </div>
+            <button type="button" class="play-again-button" on:click={play_again}>Play Again</button>
         </div>
         <canvas id="game_board" width="595" height="525"></canvas>
     </div>
@@ -90,6 +105,7 @@
         margin: auto;
         margin-top: 5vmin;
         width: 695px;
+        border-radius: 30px;
     }
     
     .scores-container {
@@ -113,10 +129,32 @@
         font-size: 40px;
         text-align: center;
         background-color: rgb(39, 126, 232);
-        border-radius: 5px;
-        width: 300px;
-        height: 300px;
-        /* position: absolute; */
-        margin: 0 auto;
+        border-radius: 30px;
+        width: 350px;
+        height: 400px;
+        position: absolute;
+        margin: 55px 172.5px;
+    }
+
+    .score-line {
+        display: flex;
+    }
+
+    .score-line .left {
+        margin: 30px auto 0 30px;
+    }
+
+    .score-line .right {
+        margin: 30px 30px 0 auto;
+    }
+
+    .play-again-button {
+        background-color: blue;
+        border: none;
+        width: 200px;
+        height: 150px;
+        margin-top: 40px;
+        font-size: 45px;
+        border-radius: 20px;
     }
 </style>
