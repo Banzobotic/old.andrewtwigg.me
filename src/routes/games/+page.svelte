@@ -41,6 +41,19 @@
                 </div>
             </div>
         </a>
+        <a class="item" href="/games/snake">
+            <img class="item_image" src="/images/snake.png" alt="Picross Board">
+            <div class="info">
+                <div class="name">Snake</div>
+                <div class="description">
+                    Eat food to grow bigger
+                    <br><br>
+                    Try to get the highest score possible
+                    <br><br>
+                    Use wasd or the arrow keys to move around
+                </div>
+            </div>
+        </a>
     </div>
 </body>
 

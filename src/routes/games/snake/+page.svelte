@@ -65,9 +65,8 @@
 </head>
 
 <body>
-    <Navbar/>
+    <!-- <Navbar/> -->
 
-    <!-- <button type="button" on:click={start_moving} style="height: 30px; width: 50px;"></button> -->
     <div class="game">
         <div class="scores-container">
             <p class="score">{score}</p>
