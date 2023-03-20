@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="../favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta http-equiv="content-security-policy" content="">
+		<link href="../_app/immutable/assets/_page.72ea5abb.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/units.fea8735e.css" rel="stylesheet">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/entry/start.c362c197.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/chunks/index.e5a23430.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/chunks/singletons.d95d989d.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/chunks/index.6e332c4a.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/entry/app.c573d5c0.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/entry/layout.svelte.f800d4c0.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/entry/_layout.ts.fb1865a6.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/chunks/_layout.da46b06b.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/entry/games-snake-page.svelte.0f37b325.mjs">
+		<link rel="preload" as="script" crossorigin="anonymous" href="../_app/immutable/chunks/units.2302c2a4.mjs">
+	</head>
+	<body>
+		<div>
+
+
+<head><title>Snake</title></head>
+
+<body class="svelte-2z77ix"><div class="navbar svelte-6f7tbi"><div class="header svelte-6f7tbi"><a href="/" class="svelte-6f7tbi">Andrew Twigg</a></div>
+    <div class="nav_options svelte-6f7tbi"><a class=" svelte-6f7tbi" href="/about">About Me</a>
+        <a class=" svelte-6f7tbi" href="/projects">Projects</a>
+        <a class=" svelte-6f7tbi" href="/games">Games</a></div></div>
+<div class="mobile_navbar_wrapper svelte-6f7tbi"><div class="mobile_nav_options svelte-6f7tbi"><a class=" svelte-6f7tbi" href="/about">About Me</a>
+        <a class=" svelte-6f7tbi" href="/projects">Projects</a>
+        <a class=" svelte-6f7tbi" href="/games">Games</a></div>
+</div>
+
+    
+    <div class="game svelte-2z77ix"><div class="scores-container svelte-2z77ix"><p class="score svelte-2z77ix">0</p>
+            <p class="high-score svelte-2z77ix">0</p></div>
+        <div class="end-screen svelte-2z77ix" style="visibility: hidden;"><div class="score-line svelte-2z77ix"><p class="left svelte-2z77ix">Score:</p>
+                <p class="right svelte-2z77ix">0</p></div>
+            <div class="score-line svelte-2z77ix"><p class="left svelte-2z77ix">High Score:</p>
+                <p class="right svelte-2z77ix">0</p></div>
+            <button type="button" class="play-again-button svelte-2z77ix">Play Again</button></div>
+        <canvas id="game_board" width="595" height="525" class="svelte-2z77ix"></canvas></div>
+</body>
+
+
+			
+			<script>
+				{
+					__sveltekit_rnsb4h = {
+						env: {},
+						assets: new URL("..", location.href).pathname.replace(/^\/$/, ''),
+						element: document.currentScript.parentElement
+					};
+
+					const data = [null,null];
+
+					Promise.all([
+						import("../_app/immutable/entry/start.c362c197.mjs"),
+						import("../_app/immutable/entry/app.c573d5c0.mjs")
+					]).then(([kit, app]) => {
+						kit.start(app, __sveltekit_rnsb4h.element, {
+							node_ids: [0, 6],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
